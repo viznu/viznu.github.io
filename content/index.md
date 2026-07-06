@@ -16,11 +16,3 @@ production LLM agent systems and AI application security. I'm currently **Lead
 Engineer at NuGuard AI**, an alumnus of **Johns Hopkins** (M.S., Security
 Informatics), and pursuing graduate study toward a **PhD in AI/ML with a focus
 on technical AI safety**.
-
-## Contact
-
-- Email — [vnair91@gmail.com](mailto:vnair91@gmail.com)
-- GitHub — [github.com/viznu](https://github.com/viznu)
-- LinkedIn — [linkedin.com/in/vishnu-nair](https://www.linkedin.com/in/vishnu-nair)
-- X — [x.com/visceralnair](https://x.com/visceralnair)
-- Medium — [medium.com/@vsnr](https://medium.com/@vsnr)
