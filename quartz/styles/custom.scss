@@ -1,0 +1,1226 @@
+@use "./variables.scss" as *;
+@use "sass:map";
+
+// base.scss caps `.page` at this and centres it, so on a window wider than the
+// page there are gutters either side. The frozen nav bar is `fixed`, which
+// means its offsets resolve against the viewport rather than the page — so a
+// plain `left: 10%` drifts off the grid's own 10% rail and slides over the
+// wordmark. These mirror the page's sizing so the bar tracks the content
+// column at any window width.
+$pageMax: map.get($breakpoints, desktop) + 300px;
+
+:root {
+  --monoFont: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
+  --page-max: #{$pageMax};
+  --page-gutter: max(0px, (100vw - var(--page-max)) / 2);
+  --rail-width: calc(min(100vw, var(--page-max)) * 0.19);
+  // how far down the page the name, the menu and the content all begin
+  --rail-top: 7vh;
+}
+
+// ===========================================================================
+//  "Sea & light" — a literary, playful theme
+//  Motifs: sea, light, horizon, language. Sand paper + sea-teal + warm amber.
+// ===========================================================================
+
+// The header font (Caveat) is handwritten — it reads smaller and lighter than
+// a serif, so headings get extra weight and size to carry as titles.
+article h1,
+article h2,
+article h3,
+article h4 {
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  line-height: 1.15;
+}
+
+// The type scale is led from the top: the name in the rail is the largest
+// thing on the site, then the page's name hanging from the nav bar at
+// 1.06rem. Section headings sit at or below that, so nothing inside a page
+// outshouts the page's own title — they are told apart by weight, the rule
+// beneath them and their numeral rather than by size.
+article {
+  font-size: 1.06rem;
+}
+
+article h1 {
+  font-size: 1.5rem;
+}
+article h2 {
+  font-size: 1.24rem;
+}
+article h3 {
+  font-size: 1.12rem;
+}
+
+// the page's own heading, kept below the wordmark in the rail
+h1.article-title {
+  font-size: 1.5rem;
+}
+
+// --- Paper grain -----------------------------------------------------------
+// A whisper of texture so the sand background doesn't read as flat white.
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+:root[saved-theme="dark"] body::before {
+  opacity: 0.7;
+}
+
+// --- Home page hero --------------------------------------------------------
+.hero {
+  position: relative;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0;
+  padding-bottom: 1.2rem;
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+// a horizon: one hairline under the hero, fading out at both ends
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--gray) 50%, transparent) 20%,
+    color-mix(in oklab, var(--gray) 50%, transparent) 80%,
+    transparent
+  );
+}
+
+// The name is the sidebar wordmark, so the home page carries no visible
+// heading — but it keeps an h1 for document structure and screen readers.
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+// the intro paragraph as a lede
+.hero ~ p,
+.visually-hidden + p {
+  margin-top: 0;
+  line-height: 1.6;
+}
+
+// The wordmark is the site's identity mark.
+.page-title a {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.hero-text {
+  flex: 1 1 280px;
+}
+
+.hero-text h1 {
+  margin: 0 0 0.5rem;
+  font-family: var(--headerFont);
+  font-size: 1.9rem;
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--dark);
+}
+
+// hide Quartz's heading-anchor link (the chain icon) on the hero name
+.hero-text h1 a[role="anchor"] {
+  display: none;
+}
+
+.hero-text .hero-meta {
+  margin: 0;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  color: var(--gray);
+  font-style: italic;
+}
+
+.hero-text .hero-meta span {
+  color: var(--secondary);
+  font-style: normal;
+  font-weight: 600;
+}
+
+@media (max-width: 800px) {
+  .hero {
+    justify-content: center;
+    text-align: center;
+  }
+
+  // On phones the wordmark sits inline in the top bar rather than filling a
+  // column of its own.
+  .page-title a {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .hero {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  // Reset the row-axis flex-basis: in a column flex container 280px would
+  // apply to height and open a gap.
+  .hero-text {
+    flex: 0 0 auto;
+  }
+}
+
+// --- Content: staggered arrival --------------------------------------------
+.center > .popover-hint > *,
+article > * {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+// gentle stagger for the first handful of blocks
+article > *:nth-child(1) { animation-delay: 0.04s; }
+article > *:nth-child(2) { animation-delay: 0.10s; }
+article > *:nth-child(3) { animation-delay: 0.16s; }
+article > *:nth-child(4) { animation-delay: 0.22s; }
+article > *:nth-child(5) { animation-delay: 0.28s; }
+
+.center {
+  max-width: 760px;
+}
+
+// --- Headings & prose ------------------------------------------------------
+article h1,
+article h2,
+article h3 {
+  font-family: var(--headerFont);
+  letter-spacing: -0.01em;
+}
+
+// Section headings carry a roman numeral and sit on a hairline rule, like the
+// sections of a printed catalogue. Numbers reset per page.
+article {
+  counter-reset: section;
+}
+
+article h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  counter-increment: section;
+  padding: 0 0 0.4rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--lightgray) 78%, transparent);
+}
+
+article h2::before {
+  content: counter(section, upper-roman) ".";
+  flex: none;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.72em;
+  color: var(--tertiary);
+}
+
+// --- Justified prose ---------------------------------------------------------
+// Set flush on both edges, as a printed page is. Hyphenation is what keeps the
+// word spacing even — without it justification opens rivers of white space —
+// and it only engages when the document declares a language, which Quartz does
+// from the configured locale.
+article p,
+article li {
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+// Verse is the exception: the line breaks are the poet's, so the lines are set
+// as written — never stretched to the margin, never broken across a hyphen.
+.poem,
+.poem p {
+  text-align: left;
+  -webkit-hyphens: manual;
+  hyphens: manual;
+}
+
+// A page heading that only repeats the menu item leading to it says nothing
+// twice — the rail already shows where you are. The nav script marks those and
+// they are hidden; headings that say something new (a poem, an article) stay.
+h1.article-title.is-echo {
+  display: none;
+}
+
+// A contents list opening a page starts flush too, so its first title sits on
+// the same line as the name in the rail rather than a row's padding below it.
+.toc-index .toc-row:first-child {
+  padding-top: 0;
+}
+
+// Whatever opens a page starts flush with the top of the column — otherwise a
+// list or heading carrying its own top margin sits lower than the name in the
+// rail, and the two no longer line up.
+article > div > :first-child,
+article > :first-child {
+  margin-top: 0;
+}
+
+// --- Links: a wave that draws in on hover ----------------------------------
+article a {
+  text-decoration: none;
+  background-image: linear-gradient(var(--tertiary), var(--tertiary));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+  padding-bottom: 1px;
+}
+
+article a:hover {
+  background-size: 100% 2px;
+}
+
+// --- Blockquotes as poetry -------------------------------------------------
+blockquote {
+  border-left: 3px solid var(--tertiary);
+  padding: 0.2rem 0 0.2rem 1.25rem;
+  font-family: var(--headerFont);
+  font-style: italic;
+  font-size: 1.08rem;
+  color: var(--darkgray);
+}
+
+// --- "Now" block (home) -------------------------------------------------------
+.now {
+  margin: 2.5rem 0 1rem;
+}
+
+.now-title {
+  margin: 0 0 0.6rem;
+  font-family: var(--headerFont);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--tertiary);
+}
+
+.now-row {
+  display: grid;
+  grid-template-columns: 6.2rem 1fr;
+  align-items: baseline;
+  gap: 0.8rem;
+  padding: 0.32rem 0;
+  font-size: 0.98rem;
+}
+
+.now-label {
+  font-family: var(--monoFont);
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+}
+
+// no internal-link highlight box in the Now row — keep it flush
+.now a {
+  background-color: transparent;
+}
+
+@media (max-width: 520px) {
+  .now-row {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
+    padding: 0.45rem 0;
+  }
+}
+
+// An empty folder shouldn't announce "0 items under this folder." Hide the
+// listing entirely when it has nothing in it and let the page's own text stand.
+.page-listing:has(> div > ul.section-ul:empty) {
+  display: none;
+}
+
+// A quiet way back up a level, matching the poem reader's back link.
+.back-link {
+  display: inline-block;
+  margin: 0 0 2rem;
+  font-family: var(--monoFont);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  // Quartz draws the internal-link underline as a background gradient, not a
+  // border, so clearing the colour alone leaves the rule visible.
+  background-color: transparent;
+  background-image: none;
+}
+
+.back-link:hover {
+  color: var(--dark);
+}
+
+// --- Poems (reader view) ------------------------------------------------------
+// Poem pages are a bare, centred reading view: no sidebar, no footer, no
+// artwork — just the poem, set in a gorgeous serif on the plain page.
+.poem {
+  font-family: var(--headerFont);
+  font-size: 1.28rem;
+  font-weight: 400;
+  line-height: 1.9;
+  max-width: 34rem;
+}
+
+// preserve the poet's own line breaks
+.poem p {
+  white-space: pre-line;
+  margin: 0 0 1.7rem;
+}
+
+// a quiet back link at the top of the reader view
+.poem-back {
+  display: inline-block;
+  margin: 0 0 3rem;
+  font-family: var(--monoFont);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.poem-back:hover {
+  color: var(--dark);
+}
+
+// the reader shell: no sidebar/footer, a single centred column
+body:has(.center .poem-page) {
+  .left.sidebar,
+  .right.sidebar,
+  footer,
+  .breadcrumb-container {
+    display: none;
+  }
+
+  // drop the 3-column page grid; flex-centre a single reader column
+  #quartz-body {
+    display: flex !important;
+    justify-content: center;
+  }
+
+  #quartz-body > .center {
+    flex: 0 1 40rem;
+    min-width: 0;
+    max-width: 40rem !important;
+    margin: 0 !important;
+    padding: clamp(3rem, 8vh, 6rem) 1.5rem 5rem !important;
+  }
+
+  // the title is h1.article-title (a sibling of <article>, not inside it)
+  h1.article-title,
+  article h1 {
+    text-align: center;
+    font-size: 1.9rem;
+    margin: 0 0 0.6rem;
+  }
+
+  // back link centred under the title — drop the internal-link highlight box
+  .poem-back {
+    display: block;
+    text-align: center;
+    margin: 0 0 3rem;
+    background: none;
+  }
+
+  // poem block centred within the column, lines left-aligned
+  .poem {
+    margin: 0 auto;
+  }
+
+  // no catalogue numbering or rules inside a poem (e.g. multi-part pieces)
+  article h2 {
+    display: block;
+    border-bottom: none;
+    padding: 0;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  article h2::before {
+    content: none;
+  }
+
+  .center hr {
+    display: none;
+  }
+}
+
+// Hover popovers are disabled site-wide (enablePopovers: false). Poem links
+// instead get a runic shimmer on hover — see the Poetry section below.
+
+// --- End mark ("Finis") -------------------------------------------------------
+// A small tombstone closing every leaf page; index/folder pages skip it.
+body:not([data-slug$="index"]) article::after {
+  content: "∎";
+  display: block;
+  text-align: center;
+  margin: 1.5rem 0 0.2rem;
+  font-size: 0.85rem;
+  color: var(--tertiary);
+}
+
+// --- Book-style running text --------------------------------------------------
+// Consecutive paragraphs indent their first line and close the gap, the way
+// prose sets on a printed page. (Not in the poem reader view.)
+body:not(:has(.center .poem-page)) article p + p {
+  margin-top: 0;
+  text-indent: 1.5em;
+}
+
+// --- CV on the home page: minimal, elegant -----------------------------------
+// Smaller, lighter section headers.
+body[data-slug="index"] article h2 {
+  font-size: 1.16rem;
+  font-weight: 600;
+  margin-top: 1.05rem;
+  margin-bottom: 0.3rem;
+  padding-bottom: 0.24rem;
+}
+
+// tighter ornament break on the compact home page
+body[data-slug="index"] article hr {
+  margin: 0.9rem 0;
+}
+
+// Entries: no bullets, crisp rhythm. The name carries the line in full ink;
+// role and dates recede to a soft grey.
+body[data-slug="index"] article ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.2rem 0 0;
+}
+
+body[data-slug="index"] article li {
+  padding: 0.16rem 0;
+  line-height: 1.5;
+  color: var(--tertiary);
+}
+
+body[data-slug="index"] article li::marker,
+body[data-slug="index"] article li::before {
+  content: none;
+}
+
+body[data-slug="index"] article li strong {
+  color: var(--dark);
+  font-weight: 600;
+}
+
+// --- Ornament section breaks --------------------------------------------------
+// A small centred mark instead of a horizontal rule.
+article hr {
+  border: none;
+  height: auto;
+  background: none;
+  text-align: center;
+  margin: 1.6rem 0;
+}
+
+article hr::before {
+  content: "· · ·";
+  color: var(--tertiary);
+  letter-spacing: 0.5em;
+  font-size: 1.05rem;
+}
+
+// --- "Off the clock" contents ------------------------------------------------
+// A book's table of contents: chapter numerals, dot leaders, italic hints.
+.toc-index {
+  max-width: 480px;
+  margin: 0 0 1.5rem;
+}
+
+.toc-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  padding: 0.46rem 0.2rem;
+  text-decoration: none;
+  background: none;
+}
+
+.toc-row + .toc-row {
+  border-top: 1px solid color-mix(in oklab, var(--lightgray) 60%, transparent);
+}
+
+.toc-num {
+  font-family: var(--headerFont);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--tertiary);
+  min-width: 2rem;
+  white-space: nowrap;
+}
+
+.toc-title {
+  font-family: var(--headerFont);
+  font-weight: 600;
+  font-size: 1.08rem;
+  color: var(--dark);
+  transition: color 0.25s ease;
+}
+
+.toc-row:hover .toc-title {
+  color: var(--secondary);
+}
+
+// The contents lists replace the auto folder listing on these pages only.
+body[data-slug="off-the-clock/index"] .page-listing,
+body[data-slug="off-the-clock/poetry/index"] .page-listing {
+  display: none;
+}
+
+// --- Explorer: always-open flat list, no fold arrows -------------------------
+// Kill the desktop collapse toggle and pin the tree open. Mobile keeps its
+// hamburger overlay behavior.
+@media all and (min-width: 801px) {
+  .explorer button.desktop-explorer {
+    display: none;
+  }
+
+  .explorer,
+  .explorer.collapsed {
+    flex: 0 1 auto;
+  }
+
+  .explorer .explorer-content {
+    display: block;
+    margin-top: 0;
+  }
+}
+
+// No per-folder fold arrows anywhere — folders are plain links.
+.explorer .folder-icon {
+  display: none;
+}
+
+// Folders always open.
+.explorer-content .folder-outer {
+  visibility: visible;
+  grid-template-rows: 1fr;
+}
+
+// "Off the clock" keeps its own links on its page — the sidebar shows only the
+// top-level entry, not the nested Articles/Music/Poetry/Reading sub-tree.
+.explorer-content li:has(> .folder-container[data-folderpath^="off-the-clock"]) > .folder-outer {
+  display: none;
+}
+
+// Sidebar navigation: quiet serif links, nothing more.
+.explorer a.nav-file-title,
+.explorer .folder-title,
+.explorer a.folder-button {
+  font-family: var(--headerFont);
+  font-size: 1.16rem;
+  font-weight: 600;
+  font-style: normal;
+  // set lowercase and lightly tracked, so the menu reads as typography rather
+  // than as a row of buttons
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}
+
+// color + opacity only on the link elements — NOT the folder-title span, or its
+// value would stack with the folder-button's and render "Off the clock" faint
+.explorer a.nav-file-title,
+.explorer a.folder-button {
+  color: var(--dark);
+  opacity: 0.82;
+  transition: opacity 0.2s ease;
+}
+
+.explorer .folder-title {
+  color: var(--dark); // inherit the button's opacity, don't add its own
+}
+
+// Even vertical rhythm: files and the folder title had different line-heights,
+// so the gaps between rows were uneven. Give each row the same box.
+.explorer a.nav-file-title,
+.explorer a.folder-button {
+  display: block;
+  line-height: 1.5;
+  padding-block: 0.34rem;
+}
+
+.explorer .folder-container {
+  line-height: 1.5;
+  align-items: baseline;
+}
+
+.explorer a.nav-file-title:hover,
+.explorer .folder-container:hover .folder-title,
+.explorer a.folder-button:hover {
+  opacity: 1;
+}
+
+// --- Sidebar wordmark -------------------------------------------------------
+// "vsn" is the sidebar's centrepiece: set large, tight and dark so it reads as
+// a mark rather than a line of navigation.
+.page-title,
+h2.page-title,
+.page-title a {
+  font-family: var(--headerFont);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+@media all and (min-width: 801px) {
+  h2.page-title {
+    // no top margin: the name starts on the same line as the content beside it
+    margin: 0 0 0.6rem;
+  }
+
+  // "Vishnu Nair" breaks across two lines in the rail. The break is forced
+  // rather than left to wrapping, so it never depends on the rail's width.
+  .page-title a {
+    font-size: clamp(1.1rem, 2.4vw, 1.9rem);
+    line-height: 1.05;
+    color: var(--dark);
+    text-align: center;
+    word-spacing: 100vw;
+  }
+}
+
+// The page frame draws a rule between the content and the footer. The end mark
+// and the footer's own spacing already close the page, so it only adds a line.
+.page > #quartz-body > .center > hr {
+  display: none;
+}
+
+// --- Social links and contact: the foot of every page ------------------------
+// Two footers are rendered — one in the sidebar (from the layout block in
+// quartz.config.yaml) and one at the bottom of the page frame. The page-foot
+// copy is the one that shows, at every width; the sidebar's stays hidden.
+footer {
+  display: none;
+}
+
+.page > div > footer {
+  display: block;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.page > div > footer ul {
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+// only the icons show — the "Created with" credit line is hidden in both.
+// Scoped to the footer's own paragraph so the contact block's lines survive.
+footer > p {
+  display: none;
+}
+
+// --- Theme switch: pinned to the top-right corner ---------------------------
+// It travels with the viewport rather than sitting in the rail, so it is in
+// the same place on every page and at every width.
+.left.sidebar .flex-component {
+  position: fixed;
+  top: 0.55rem;
+  right: 0.55rem;
+  left: auto;
+  bottom: auto;
+  z-index: 30;
+  // shrink to the switch itself — stretched to the viewport it would centre
+  // the button in the middle of the page
+  width: max-content;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.left.sidebar .flex-component > div {
+  align-self: center !important;
+}
+
+// --- Contact: under the social icons -----------------------------------------
+// Addresses are written out ("{at}", "{dot}") rather than linked, so they read
+// clearly to a person without handing a scraper a mailto: target.
+.contact-block {
+  margin-top: 0.35rem;
+  padding-bottom: 0.9rem;
+  font-family: var(--monoFont);
+  font-size: 0.7rem;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: var(--gray);
+}
+
+// Label and both addresses run as a single line rather than a stack of four.
+.contact-block p {
+  display: inline;
+  margin: 0;
+}
+
+.contact-block p + p::before {
+  content: "·";
+  padding: 0 0.5em;
+  opacity: 0.55;
+}
+
+.contact-label {
+  opacity: 0.75;
+}
+
+// the label already reads as an introduction, so no separator after it —
+// needs to outrank the `p + p` rule above, hence the extra class
+.contact-block .contact-label + p::before {
+  content: none;
+}
+
+// At the foot of a phone screen the block is centred and given room to breathe;
+// each address keeps its own line, as in the sidebar.
+@media all and (min-width: 801px) {
+  // A narrow rail against a wide page: the sidebar takes a tenth, the content
+  // the rest. The third grid column (the unused right sidebar) collapses.
+  .page > #quartz-body {
+    grid-template-columns: 19% auto 0;
+    column-gap: 0;
+  }
+
+  // The right sidebar holds nothing, but its padding still spills past the
+  // collapsed track and scrolls the page sideways.
+  .page > #quartz-body > .right.sidebar {
+    display: none;
+  }
+
+  // A tenth of the page is a narrow rail, so it trades base.scss's 2rem side
+  // padding for a slimmer inset.
+  .page > #quartz-body > .left.sidebar {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  // The menu lives in the rail, stacked under the wordmark. Each item shrinks
+  // to its own text and is centred, so the brackets hug the word rather than
+  // stretching to the rail's edges — a file link is a block by default while a
+  // folder's button is not, which is what made the three look mismatched.
+  .left.sidebar .explorer .explorer-content ul li {
+    text-align: center;
+  }
+
+  .left.sidebar .explorer a.nav-file-title,
+  .left.sidebar .explorer a.folder-button {
+    display: inline-block;
+    padding-block: 0.26rem;
+  }
+
+  // The reading measure, as on permutation.ink: justified text needs a short
+  // line or the word spacing opens up. `.center` keeps its full width (the
+  // grid relies on it) and the prose inside is capped and centred instead —
+  // the column sits in the middle of the page, the text stays flush left.
+  .page > #quartz-body > .center {
+    --measure: 34rem;
+    // where the centred column's left edge lands, so anything anchored to the
+    // text can follow it
+    --measure-left: calc(
+      2.5rem + max(0px, (100% - 2.5rem - 2rem - var(--measure)) / 2)
+    );
+  }
+
+  // The reading column is centred on the page itself rather than inside the
+  // content track, so pushing the rail wider moves the rail alone and the text
+  // stays dead centre. The heading is a sibling of <article>, so it takes the
+  // same treatment or it drifts off the column it belongs to.
+  .page > #quartz-body > .center article,
+  .page > #quartz-body > .center .page-header {
+    max-width: var(--measure);
+    margin-right: auto;
+    margin-left: max(
+      0px,
+      calc(
+        (min(100vw, var(--page-max)) - var(--measure)) / 2 - var(--rail-width) -
+          2.5rem
+      )
+    );
+  }
+
+  // base.scss opens every page with a 96px margin on an empty .page-header;
+  // the content sets its own top spacing instead.
+  .page > #quartz-body > .center .page-header {
+    margin-top: 0;
+  }
+
+  // The current page is marked in the rail rather than titled above the
+  // content, so a page never repeats the name of the menu item that leads to
+  // it. Specific enough to beat the explorer's own `a.active` rule.
+  // A file link is `li > a`, but a folder's is `li > div > a` — so these are
+  // descendant selectors, or "Off the clock" never marks. Still specific
+  // enough to beat the explorer's own `a.active` rule.
+  //
+  // The page you are on is marked by two half-frames closing around the word,
+  // drawn as pseudo-elements so the markup stays as it is.
+  .left.sidebar .explorer .explorer-content ul li a.nav-current,
+  .left.sidebar .explorer .explorer-content ul li a.nav-current .folder-title {
+    opacity: 1;
+    color: var(--dark);
+    background-color: transparent;
+  }
+
+  .left.sidebar .explorer .explorer-content ul li a {
+    position: relative;
+    padding-inline: 0.66rem;
+  }
+
+  .left.sidebar .explorer .explorer-content ul li a::before,
+  .left.sidebar .explorer .explorer-content ul li a::after {
+    content: "";
+    position: absolute;
+    top: 0.08em;
+    bottom: 0.08em;
+    width: 0.3rem;
+    border-top: 1px solid var(--dark);
+    border-bottom: 1px solid var(--dark);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.4, 0.5, 1);
+  }
+
+  .left.sidebar .explorer .explorer-content ul li a::before {
+    left: 0;
+    border-left: 1px solid var(--dark);
+    transform: translateX(0.3rem);
+  }
+
+  .left.sidebar .explorer .explorer-content ul li a::after {
+    right: 0;
+    border-right: 1px solid var(--dark);
+    transform: translateX(-0.3rem);
+  }
+
+  // the brackets close in on hover and stay closed on the current page
+  .left.sidebar .explorer .explorer-content ul li a:hover::before,
+  .left.sidebar .explorer .explorer-content ul li a:hover::after,
+  .left.sidebar .explorer .explorer-content ul li a.nav-current::before,
+  .left.sidebar .explorer .explorer-content ul li a.nav-current::after {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  // a hover is a lighter touch than the page you are actually on
+  .left.sidebar .explorer .explorer-content ul li a:not(.nav-current):hover::before,
+  .left.sidebar .explorer .explorer-content ul li a:not(.nav-current):hover::after {
+    opacity: 0.4;
+  }
+
+  // base.scss pins the centre column to `min-width: 100%`; with border-box the
+  // padding sits inside the track instead of pushing past it. The floor has to
+  // stay — .center is auto-placed in the grid (only `.center > article` gets an
+  // area), so without it short pages collapse to their content width and drift.
+  .page > #quartz-body > .center {
+    box-sizing: border-box;
+    min-width: 100%;
+    max-width: 100%;
+    padding-top: var(--rail-top);
+    padding-left: 2.5rem;
+    padding-right: 2rem;
+  }
+
+  // The rail is sticky and full height, so where its contents sit vertically
+  // is set here: high on the screen rather than dead centre, and held there
+  // as the page scrolls past.
+  .page > #quartz-body > .left.sidebar {
+    justify-content: flex-start;
+    padding-top: var(--rail-top);
+    padding-bottom: 0;
+  }
+
+
+
+  // The wordmark sits in the same column, so centre it too rather than leave
+  // it hanging off the left edge under a centred nav.
+  h2.page-title {
+    width: 100%;
+    text-align: center;
+  }
+
+  .page-title a {
+    align-items: center;
+  }
+
+
+
+  // Folders render as an icon plus a button; centre the row as a whole.
+  .left.sidebar .explorer .folder-container {
+    justify-content: center;
+  }
+
+  .left.sidebar .explorer .folder-button,
+  .left.sidebar .explorer .folder-title {
+    text-align: center;
+  }
+
+  // Overrides the left-aligned toolbar rule above, now that the theme toggle
+  // is the only thing in it.
+  .left.sidebar .flex-component > div {
+    align-self: center !important;
+  }
+}
+
+// --- Phones: the same rail, narrower ----------------------------------------
+// The menu is always on screen in a slim column down the left rather than
+// hidden behind a hamburger, so nothing has to be opened to navigate. The
+// current page's link is highlighted in place of the desktop bar's plumb line.
+@media all and (max-width: 800px) {
+  .page > #quartz-body {
+    grid-template-columns: 100px auto;
+    // the footer breaks out of the content column and runs the full width
+    grid-template-areas:
+      "grid-sidebar-left grid-header"
+      "grid-sidebar-left grid-center"
+      "grid-footer grid-footer";
+    column-gap: 0;
+  }
+
+  .page > #quartz-body > .right.sidebar {
+    display: none;
+  }
+
+  // base.scss lays the mobile sidebar out as a horizontal top bar; it becomes
+  // a column again, pinned while the content scrolls past it
+  .page > #quartz-body > .left.sidebar {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.9rem;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding: 1.1rem 0.5rem;
+    overflow-y: auto;
+  }
+
+  // no hamburger, and no panel to slide away
+  .explorer button.mobile-explorer,
+  .explorer button.desktop-explorer {
+    display: none;
+  }
+
+  // the mobile spacer exists to push items apart in a horizontal top bar; in a
+  // column it opens a 500px hole between the name and the menu
+  .left.sidebar .mobile-only,
+  .left.sidebar .spacer {
+    display: none;
+  }
+
+  .explorer,
+  .explorer.collapsed {
+    flex: 0 1 auto;
+    overflow: visible;
+    // the plugin pulls the explorer to the front of the mobile bar with
+    // order: -1 and centres it with auto margins; in a rail the name leads
+    order: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  // undo the plugin's off-screen overlay: the menu simply sits in the rail
+  .explorer > .explorer-content,
+  :root.js-nav .explorer > .explorer-content,
+  :root.js-nav.nav-open .explorer > .explorer-content {
+    position: static !important;
+    transform: none !important;
+    visibility: visible !important;
+    width: auto !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 0 !important;
+    background-color: transparent !important;
+    overflow: visible !important;
+  }
+
+  .left.sidebar .explorer a.nav-file-title,
+  .left.sidebar .explorer a.folder-button {
+    display: block;
+    padding: 0.42rem 0.3rem;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  // "Off the clock" is a folder: its label is a nested span carrying its own
+  // size, so setting the link's font-size alone leaves it oversized.
+  .left.sidebar .explorer a.nav-file-title,
+  .left.sidebar .explorer a.folder-button,
+  .left.sidebar .explorer .folder-title {
+    font-size: 0.82rem;
+  }
+
+  .left.sidebar .explorer .folder-container {
+    justify-content: center;
+  }
+
+  // The same brackets as on desktop, so the menu reads the same everywhere.
+  // Keyed on the marker the nav script sets rather than the plugin's .active,
+  // which it only puts on file links — never on a folder like "Off the clock".
+  .left.sidebar .explorer a.nav-current,
+  .left.sidebar .explorer a.nav-current .folder-title {
+    opacity: 1;
+    color: var(--dark);
+    background-color: transparent;
+  }
+
+  .left.sidebar .explorer .explorer-content ul li a {
+    position: relative;
+    padding-inline: 0.5rem;
+  }
+
+  .left.sidebar .explorer .explorer-content ul li a.nav-current::before,
+  .left.sidebar .explorer .explorer-content ul li a.nav-current::after {
+    content: "";
+    position: absolute;
+    top: 0.12em;
+    bottom: 0.12em;
+    width: 0.26rem;
+    border-top: 1px solid var(--dark);
+    border-bottom: 1px solid var(--dark);
+  }
+
+  .left.sidebar .explorer .explorer-content ul li a.nav-current::before {
+    left: 0;
+    border-left: 1px solid var(--dark);
+  }
+
+  .left.sidebar .explorer .explorer-content ul li a.nav-current::after {
+    right: 0;
+    border-right: 1px solid var(--dark);
+  }
+
+  // A phone column is only ~250px wide — far too narrow to justify, which
+  // there opens great rivers of space between words. Prose sets ragged right.
+  article p,
+  article li {
+    text-align: left;
+  }
+
+  // stays the largest type on the page, as it is on desktop
+  .page-title a {
+    font-size: 1.3rem;
+    line-height: 1.1;
+    text-align: center;
+    word-spacing: 100vw; // "Vishnu Nair" over two lines, as on desktop
+  }
+
+  h2.page-title {
+    margin: 0 0 0.3rem;
+  }
+
+  .page > #quartz-body > .center {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+// --- Footer: render the links as icons -------------------------------------
+footer ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  list-style: none;
+  padding: 0;
+  margin-top: 0.7rem;
+}
+
+footer ul li {
+  margin: 0;
+}
+
+footer ul li a {
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  // hide the text label but keep it for screen readers
+  overflow: hidden;
+  text-indent: 110%;
+  white-space: nowrap;
+  color: var(--gray);
+  background-color: currentColor;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  transition: color 0.25s ease, transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+footer ul li a:hover {
+  color: var(--secondary);
+  transform: translateY(-3px) scale(1.12);
+}
+
+@mixin icon($svg) {
+  mask-image: url($svg);
+  -webkit-mask-image: url($svg);
+}
+
+
+footer ul li a[href*="github.com"] {
+  @include icon("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E");
+}
+
+footer ul li a[href*="linkedin"] {
+  @include icon("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z'/%3E%3C/svg%3E");
+}
+
+footer ul li a[href*="x.com"] {
+  @include icon("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z'/%3E%3C/svg%3E");
+}
+
+footer ul li a[href*="medium.com"] {
+  @include icon("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z'/%3E%3C/svg%3E");
+}
+
+// --- Motion keyframes ------------------------------------------------------
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Respect users who'd rather not have motion.
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  article > *,
+  .center > .popover-hint > * {
+    animation: none !important;
+  }
+  footer ul li a {
+    transition: none;
+  }
+}

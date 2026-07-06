@@ -1,0 +1,19 @@
+# Dependencies
+node_modules
+
+# Quartz build output
+public
+.quartz
+.quartz-cache
+quartz/.quartz-cache
+tsconfig.tsbuildinfo
+
+# Profiling
+prof
+
+# Local editor / OS cruft
+.DS_Store
+.obsidian
+
+# Unpublished content
+private/
