@@ -199,8 +199,9 @@ plugins:
     options:
       links:
         Email: mailto:vnair91@gmail.com
-        GitHub: https://github.com/your-username # TODO: your GitHub username
-        LinkedIn: https://www.linkedin.com/in/your-handle # TODO: your LinkedIn
+        GitHub: https://github.com/viznu
+        LinkedIn: https://www.linkedin.com/in/vishnu-nair
+        Medium: https://medium.com/@vsnr
   - source: github:quartz-community/recent-notes
     enabled: false
   - source: github:quartz-community/spacer

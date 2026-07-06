@@ -1,35 +1,37 @@
 ---
-title: Research
+title: Research & AI safety
 ---
 
-I came to research from the systems side, which shapes how I think about models:
-I care about what actually makes them work at scale, not just what they can be
-made to say. The questions I keep returning to:
+I come to safety research from the engineering side: a decade of building
+production AI/ML, data, and security systems. That background shapes how I work
+— I like to take a claim from the literature and turn it into a working artifact
+quickly.
 
-## Reasoning in language models
+## Technical AI safety
 
-How reasoning emerges, and how reinforcement learning shapes it. What's really
-happening when a model "thinks," and how much of it is search versus retrieval.
+I'm currently training as an independent researcher in technical AI safety,
+through:
 
-## World models
+- **MIT AI Alignment — AI Safety Fundamentals Fellowship** (2026–present).
+  Selected as an independent researcher; a structured cohort covering neural
+  network interpretability, learning from human feedback (RLHF), goal
+  misgeneralization in RL agents, eliciting latent knowledge, and scalable
+  oversight.
+- **BlueDot Impact — Technical AI Safety** and **AGI Strategy** (2026).
+  Alignment research methods and threat models; governance, deployment risk, and
+  the strategic landscape of advanced AI.
 
-What it means for an agent to build an internal model of an environment it has
-never seen — and how that plays out in interactive settings like ARC-AGI-3,
-where an agent has to infer the rules of a novel game and plan under a tight
-action budget.
+## AI application security
 
-## In-context learning & training data
+At **NuGuard AI** I'm building an AI application security framework that assesses
+agentic LLM systems across SBOM graph analysis, static analysis, automated
+red-teaming, and policy validation — including an adversarial testing layer with
+multi-turn attack scenarios and canary-based detection of data exfiltration and
+out-of-scope agent behavior.
 
-How models learn from context without weight updates, and how the ordering and
-generation of training data affects capability. I'm interested in data as a
-first-class research object, not an afterthought.
+## Earlier research
 
-## Alignment & the shape of intelligence
-
-Longer-horizon questions about AGI timelines, what LLMs are and aren't, and how
-to think honestly about agency and capability without hype.
-
----
-
-*I write about several of these in more depth — see [[creative|off the clock]]
-for the more essayistic side of my writing.*
+During my M.S. at **Johns Hopkins**, my work centered on security and applied
+ML: a post-quantum cryptographic scheme (thesis, in Go), malware classification
+with ML, Monero transaction traceability, and semi-supervised detection of
+malicious network traffic.
