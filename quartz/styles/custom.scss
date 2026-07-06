@@ -265,6 +265,35 @@ blockquote {
   margin: 0.5rem 0 2.25rem;
 }
 
+// poem + artwork side by side; art rides along on scroll
+.poem-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(220px, 38%, 320px);
+  gap: 2.25rem;
+  align-items: start;
+}
+
+.poem-layout .poem-art {
+  position: sticky;
+  top: 1.5rem;
+  max-height: none;
+  object-fit: contain;
+  margin: 0.35rem 0 0;
+}
+
+@media (max-width: 800px) {
+  .poem-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .poem-layout .poem-art {
+    position: static;
+    order: -1;
+    margin: 0.25rem 0 1.9rem;
+  }
+}
+
 // --- End mark ("Finis") -------------------------------------------------------
 // A small tombstone closing every leaf page; index/folder pages skip it.
 body:not([data-slug$="index"]) article::after {

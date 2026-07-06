@@ -2,10 +2,7 @@
 title: "an ode to memory"
 ---
 
-<!-- Artwork: drop an image at assets/an-ode-to-memory.jpg (or .png) and uncomment:
-<img class="poem-art" src="assets/an-ode-to-memory.jpg" alt="" />
--->
-
+<div class="poem-layout">
 <div class="poem">
 
 slowly.
@@ -30,5 +27,9 @@ passing year,
 come winter's ice,
 but emboldens
 the low,sooty fires of want.
+
+</div>
+
+<img class="poem-art" src="assets/an-ode-to-memory.jpg" alt="Watercolor: a golden moon in washes of teal, ochre and rose over still water." />
 
 </div>

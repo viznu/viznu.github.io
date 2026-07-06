@@ -2,10 +2,7 @@
 title: "All these thousand roads lead to the sea"
 ---
 
-<!-- Artwork: drop an image at assets/thousand-roads.jpg (or .png) and uncomment:
-<img class="poem-art" src="assets/thousand-roads.jpg" alt="" />
--->
-
+<div class="poem-layout">
 <div class="poem">
 
 All these thousand roads lead to the sea
@@ -24,5 +21,9 @@ These tears that my pain frees
 
 All these thousand roads lead to the sea
 I am not yet where I need to be
+
+</div>
+
+<img class="poem-art" src="assets/thousand-roads.jpg" alt="Watercolor: a lone figure on a hilltop path, looking out over many winding roads running down to the sea at sunset." />
 
 </div>
