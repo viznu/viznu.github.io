@@ -2,9 +2,6 @@
 title: CV
 ---
 
-The short version. For the full record — projects, metrics, and the rest — see my
-[LinkedIn](https://www.linkedin.com/in/vishnu-nair).
-
 ## Experience
 
 - **NuGuard AI** — Lead Engineer · 2026–present
