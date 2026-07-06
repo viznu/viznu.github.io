@@ -243,14 +243,16 @@ blockquote {
 
 // --- Poems --------------------------------------------------------------------
 .poem {
-  white-space: pre-line;
   line-height: 1.7;
   margin: 0 0 3rem;
   max-width: 34rem;
 }
 
+// pre-line on the paragraphs only — on the container it would also render
+// the newlines between <p> tags and double every stanza gap
 .poem p {
-  margin: 0 0 1.4rem;
+  white-space: pre-line;
+  margin: 0 0 1.3rem;
 }
 
 // artwork above a poem
