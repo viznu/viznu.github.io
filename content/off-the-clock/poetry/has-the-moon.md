@@ -1,5 +1,5 @@
 ---
-title: "Has the Moon, Your Lover,"
+title: "The Moon, Your Lover"
 ---
 
 <div class="poem-page" style="--art-color: #c25731; --art-focus: top">

@@ -1,5 +1,5 @@
 ---
-title: Research interests
+title: Research
 ---
 
 I come to safety research from the engineering side: a decade of building

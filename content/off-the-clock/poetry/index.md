@@ -5,13 +5,13 @@ title: Poetry
 <nav class="toc-index" aria-label="Poems">
   <a class="toc-row" href="/off-the-clock/poetry/thousand-roads">
     <span class="toc-num">i.</span>
-    <span class="toc-title">All These Thousand Roads Lead to the Sea</span>
+    <span class="toc-title">Soul Molt</span>
     <span class="toc-leader"></span>
     <span class="toc-hint">a painted hollow</span>
   </a>
   <a class="toc-row" href="/off-the-clock/poetry/has-the-moon">
     <span class="toc-num">ii.</span>
-    <span class="toc-title">Has the Moon, Your Lover,</span>
+    <span class="toc-title">The Moon, Your Lover</span>
     <span class="toc-leader"></span>
     <span class="toc-hint">gossamer galaxies</span>
   </a>
