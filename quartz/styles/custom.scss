@@ -362,43 +362,8 @@ body:has(.center .poem-page) {
   }
 }
 
-// popovers clone page content — suppress the immersive chrome inside them
-.popover .poem-page::before,
-.popover .poem-back {
-  content: none;
-  display: none;
-}
-
-// --- Hover previews -------------------------------------------------------------
-// No breadcrumbs or link lists in any popover — content only.
-.popover .popover-inner nav {
-  display: none;
-}
-
-// When a hover popover contains poem artwork, show just the painting.
-.popover .popover-inner:has(img.poem-art) {
-  padding: 0;
-
-  h1,
-  .poem,
-  p,
-  hr {
-    display: none;
-  }
-
-  img.poem-art {
-    display: block;
-    width: 100%;
-    height: 15rem;
-    max-height: 20rem;
-    object-fit: cover;
-    margin: 0;
-    border: none;
-    box-shadow: none;
-    border-radius: inherit;
-    position: static;
-  }
-}
+// Hover popovers are disabled site-wide (enablePopovers: false). Poem links
+// instead get a runic shimmer on hover — see the Poetry section below.
 
 // --- End mark ("Finis") -------------------------------------------------------
 // A small tombstone closing every leaf page; index/folder pages skip it.
@@ -477,6 +442,40 @@ body:not([data-slug$="index"]) article::after {
   color: var(--darkgray);
 }
 
+// Poetry contents: on hover a leafy creeper grows along the dotted leader line
+// between title and hint — left→right, like a vine threading the page. Uses
+// mid-tone sage/gold so it reads in both light and dark mode; sits on the line,
+// never over the text.
+.toc-index[aria-label="Poems"] .toc-leader {
+  position: relative;
+}
+
+.toc-index[aria-label="Poems"] .toc-leader::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 18px;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='54' height='18' viewBox='0 0 54 18'%3E%3Cpath d='M0 10 Q13 6 27 10 T54 10' fill='none' stroke='%237e9b86' stroke-width='1.1'/%3E%3Cpath d='M13 8 C10 3 13 1 15 3 C17 5 15 8 13 8 Z' fill='%237e9b86'/%3E%3Cpath d='M13 8 L14 4' stroke='%237e9b86' stroke-width='0.5'/%3E%3Cpath d='M27 11 C30 16 27 18 25 16 C23 14 25 11 27 11 Z' fill='%23c1913f'/%3E%3Cpath d='M40 8 C37 3 40 1 42 3 C44 5 42 8 40 8 Z' fill='%2390a98f'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 54px 18px;
+  background-position: left center;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.85s cubic-bezier(0.5, 0, 0.2, 1);
+}
+
+.toc-index[aria-label="Poems"] .toc-row:hover .toc-leader::after {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toc-index[aria-label="Poems"] .toc-leader::after {
+    transition: none;
+  }
+}
+
 @media (max-width: 520px) {
   .toc-hint {
     display: none;
@@ -517,6 +516,12 @@ body[data-slug="off-the-clock/poetry/index"] .page-listing {
 .explorer-content .folder-outer {
   visibility: visible;
   grid-template-rows: 1fr;
+}
+
+// "Off the clock" keeps its own links on its page — the sidebar shows only the
+// top-level entry, not the nested Articles/Music/Poetry/Reading sub-tree.
+.explorer-content li:has(> .folder-container[data-folderpath^="off-the-clock"]) > .folder-outer {
+  display: none;
 }
 
 // --- Sidebar page title ----------------------------------------------------

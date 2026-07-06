@@ -1,5 +1,5 @@
 ---
-title: "Where Do All the Thoughts Of"
+title: "The Continents of I"
 ---
 
 <div class="poem-page" style="--art-color: #3a6068">

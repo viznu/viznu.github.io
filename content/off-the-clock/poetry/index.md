@@ -41,7 +41,7 @@ title: Poetry
   </a>
   <a class="toc-row" href="/off-the-clock/poetry/where-do-all-the-thoughts">
     <span class="toc-num">vii.</span>
-    <span class="toc-title">Where Do All the Thoughts Of</span>
+    <span class="toc-title">The Continents of I</span>
     <span class="toc-leader"></span>
     <span class="toc-hint">love will stay your sails</span>
   </a>
