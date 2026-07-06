@@ -255,10 +255,25 @@ blockquote {
   margin: 0 0 1.3rem;
 }
 
-// Poem pages with artwork: a .poem-page wrapper carries --art-color (extracted
-// from the painting). The art renders as a large hero, and a fixed ambient
-// wash tints the whole page in the painting's palette. color-mix against
-// transparent keeps it working over both light and dark backgrounds.
+// Poem pages with artwork are fully immersive: the painting is the page
+// background, the sidebar and footer vanish, the poem sits over a scrim on
+// the left, and the only chrome is a white back button. The .poem-page
+// wrapper carries --art-color (a swatch from the painting) and --art-focus
+// (the crop focal point).
+.poem-page .poem-art {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: var(--art-focus, center);
+  z-index: -2;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+}
+
+// a left-weighted scrim so the poem stays readable over any painting
 .poem-page::before {
   content: "";
   position: fixed;
@@ -266,33 +281,92 @@ blockquote {
   z-index: -1;
   pointer-events: none;
   background: linear-gradient(
-    180deg,
-    color-mix(in oklab, var(--art-color, transparent) 24%, transparent),
-    transparent 78%
+    100deg,
+    color-mix(in oklab, var(--art-color, #14120f) 18%, rgb(16 14 12 / 0.82)),
+    color-mix(in oklab, var(--art-color, #14120f) 12%, rgb(16 14 12 / 0.55)) 45%,
+    rgb(16 14 12 / 0.1) 80%
   );
 }
 
-// popovers clone page content — never let a cloned wrapper tint the live page
-.popover .poem-page::before {
-  content: none;
+// the back button — the page's only navigation
+.poem-back {
+  position: fixed;
+  top: 1.4rem;
+  left: 1.4rem;
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: #fff;
+  background: rgb(0 0 0 / 0.35);
+  border: 1px solid rgb(255 255 255 / 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background 0.2s ease;
 }
 
-.poem-art {
-  width: 100%;
-  height: min(58vh, 600px);
-  object-fit: cover;
-  object-position: var(--art-focus, center);
-  border-radius: 14px;
-  border: 1px solid color-mix(in oklab, var(--art-color, var(--gray)) 35%, var(--lightgray));
-  box-shadow: 0 26px 64px -24px color-mix(in oklab, var(--art-color, #000000) 60%, transparent);
-  margin: 0.4rem 0 2.5rem;
+.poem-back:hover {
+  background: rgb(0 0 0 / 0.6);
 }
 
-@media (max-width: 800px) {
-  .poem-art {
-    height: min(44vh, 420px);
-    border-radius: 10px;
+// page shell on immersive poem pages: no sidebars, no footer, no breadcrumbs.
+// Scoped to .center so a cloned .poem-page inside a hover popover (which is
+// appended to <body>) can never flip the current page into immersive mode.
+body:has(.center .poem-page) {
+  // the stagger animation's transform would trap position: fixed children
+  // (the full-bleed art and scrim) inside the article — no animation here
+  article > *,
+  .center > .popover-hint > * {
+    animation: none;
   }
+
+  .left.sidebar,
+  .right.sidebar,
+  footer,
+  .breadcrumb-container {
+    display: none;
+  }
+
+  .center {
+    margin: 0;
+    max-width: 44rem;
+    padding: 5.5rem clamp(1.5rem, 5vw, 4rem) 4rem clamp(1.5rem, 9vw, 8rem);
+  }
+
+  h1 {
+    color: #fff;
+    text-shadow: 0 2px 22px rgb(0 0 0 / 0.5);
+  }
+
+  .poem {
+    max-width: 30rem;
+  }
+
+  .poem p {
+    color: rgb(255 255 255 / 0.94);
+    text-shadow: 0 1px 12px rgb(0 0 0 / 0.4);
+  }
+
+  article::after {
+    color: rgb(255 255 255 / 0.7);
+    text-align: left;
+  }
+
+  .center hr {
+    display: none;
+  }
+}
+
+// popovers clone page content — suppress the immersive chrome inside them
+.popover .poem-page::before,
+.popover .poem-back {
+  content: none;
+  display: none;
 }
 
 // --- Hover previews -------------------------------------------------------------

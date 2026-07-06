@@ -4,6 +4,8 @@ title: "Has the Moon, Your Lover,"
 
 <div class="poem-page" style="--art-color: #c25731; --art-focus: top">
 
+<a class="poem-back" href="/off-the-clock/poetry/" aria-label="Back to poems">&#8592;</a>
+
 <img class="poem-art" src="assets/has-the-moon.jpg" alt="Folk-art night scene: a woman with dark hair beneath a gold crescent moon, jasmine flowers, a mandolin, a sailboat on a moonlit sea, and a blue bird with a shattering mosaic wing." />
 
 <div class="poem">

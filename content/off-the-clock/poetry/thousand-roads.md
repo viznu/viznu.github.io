@@ -4,6 +4,8 @@ title: "All These Thousand Roads Lead to the Sea"
 
 <div class="poem-page" style="--art-color: #efa87e">
 
+<a class="poem-back" href="/off-the-clock/poetry/" aria-label="Back to poems">&#8592;</a>
+
 <img class="poem-art" src="assets/thousand-roads.jpg" alt="Watercolor: a lone figure on a hilltop path, looking out over many winding roads running down to the sea at sunset." />
 
 <div class="poem">
