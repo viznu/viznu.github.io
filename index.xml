@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+      <title>Vishnu Nair</title>
+      <link>https://viznu.github.io</link>
+      <description>Last 10 notes on Vishnu Nair</description>
+      <generator>Quartz -- quartz.jzhao.xyz</generator>
+      <item>
+    <title>Tag Index</title>
+    <link>https://viznu.github.io/tags/</link>
+    <guid>https://viznu.github.io/tags/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Mon, 06 Jul 2026 05:20:52 GMT</pubDate>
+  </item><item>
+    <title>Off the clock</title>
+    <link>https://viznu.github.io/creative</link>
+    <guid>https://viznu.github.io/creative</guid>
+    <description><![CDATA[ Away from the terminal, I write poetry and make music. I write poetry — mostly elegiac, circling memory, language, the sea, light, fatherhood. ]]></description>
+    <pubDate>Mon, 06 Jul 2026 05:17:42 GMT</pubDate>
+  </item><item>
+    <title>CV</title>
+    <link>https://viznu.github.io/cv</link>
+    <guid>https://viznu.github.io/cv</guid>
+    <description><![CDATA[ The short version. For the full record — projects, metrics, and the rest — see my LinkedIn. ]]></description>
+    <pubDate>Mon, 06 Jul 2026 05:13:09 GMT</pubDate>
+  </item><item>
+    <title>Vishnu Nair</title>
+    <link>https://viznu.github.io/</link>
+    <guid>https://viznu.github.io/</guid>
+    <description><![CDATA[ I’m Vishnu Nair — an AI/ML engineer working on agentic systems, data platforms, and AI safety &amp; security. ]]></description>
+    <pubDate>Mon, 06 Jul 2026 04:55:19 GMT</pubDate>
+  </item><item>
+    <title>Research &amp; AI safety</title>
+    <link>https://viznu.github.io/research</link>
+    <guid>https://viznu.github.io/research</guid>
+    <description><![CDATA[ I come to safety research from the engineering side: a decade of building production AI/ML, data, and security systems. ]]></description>
+    <pubDate>Mon, 06 Jul 2026 04:55:19 GMT</pubDate>
+  </item>
+    </channel>
+  </rss>
