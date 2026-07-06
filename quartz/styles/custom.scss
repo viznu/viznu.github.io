@@ -1,0 +1,716 @@
+@use "./variables.scss" as *;
+
+// A system monospace for metadata (labels, dates) — the "typewriter" accent.
+:root {
+  --monoFont: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
+}
+
+// ===========================================================================
+//  "Sea & light" — a literary, playful theme
+//  Motifs: sea, light, horizon, language. Sand paper + sea-teal + warm amber.
+// ===========================================================================
+
+// The header font (Caveat) is handwritten — it reads smaller and lighter than
+// a serif, so headings get extra weight and size to carry as titles.
+article h1,
+article h2,
+article h3,
+article h4 {
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  line-height: 1.15;
+}
+
+article h1 {
+  font-size: 2.7rem;
+}
+article h2 {
+  font-size: 2.05rem;
+}
+article h3 {
+  font-size: 1.6rem;
+}
+
+// --- Paper grain -----------------------------------------------------------
+// A whisper of texture so the sand background doesn't read as flat white.
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+:root[saved-theme="dark"] body::before {
+  opacity: 0.7;
+}
+
+// --- Home page hero --------------------------------------------------------
+.hero {
+  position: relative;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0;
+  padding-bottom: 1.2rem;
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+// a horizon: one hairline under the hero, fading out at both ends
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--gray) 50%, transparent) 20%,
+    color-mix(in oklab, var(--gray) 50%, transparent) 80%,
+    transparent
+  );
+}
+
+// the intro paragraph as a lede
+.hero ~ p {
+  margin-top: 1rem;
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+// Portrait now lives in the sidebar as a small round avatar beside the site
+// title.
+.page-title a {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+
+.page-title a::before {
+  content: "";
+  width: 140px;
+  height: 187px; // cutout is 520x694
+  flex: none;
+  background-image: url("/assets/portrait-cutout.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: grayscale(1) contrast(1.02);
+  // soft fade at the bottom so the torso melts into the page
+  -webkit-mask-image: radial-gradient(125% 108% at 50% 4%, #000 85%, transparent 100%);
+  mask-image: radial-gradient(125% 108% at 50% 4%, #000 85%, transparent 100%);
+}
+
+.hero-text {
+  flex: 1 1 280px;
+}
+
+.hero-text h1 {
+  margin: 0 0 0.5rem;
+  font-family: var(--headerFont);
+  font-size: clamp(2.5rem, 6vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--dark);
+}
+
+// hide Quartz's heading-anchor link (the chain icon) on the hero name
+.hero-text h1 a[role="anchor"] {
+  display: none;
+}
+
+.hero-text .tagline {
+  margin: 0 0 0.5rem;
+  font-size: 1.12rem;
+  color: var(--darkgray);
+}
+
+.hero-text .hero-meta {
+  margin: 0;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  color: var(--gray);
+  font-style: italic;
+}
+
+.hero-text .hero-meta span {
+  color: var(--secondary);
+  font-style: normal;
+  font-weight: 600;
+}
+
+@media (max-width: 800px) {
+  .hero {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+// --- Content: staggered arrival --------------------------------------------
+.center > .popover-hint > *,
+article > * {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+// gentle stagger for the first handful of blocks
+article > *:nth-child(1) { animation-delay: 0.04s; }
+article > *:nth-child(2) { animation-delay: 0.10s; }
+article > *:nth-child(3) { animation-delay: 0.16s; }
+article > *:nth-child(4) { animation-delay: 0.22s; }
+article > *:nth-child(5) { animation-delay: 0.28s; }
+
+.center {
+  max-width: 760px;
+}
+
+// --- Headings & prose ------------------------------------------------------
+article h1,
+article h2,
+article h3 {
+  font-family: var(--headerFont);
+  letter-spacing: -0.01em;
+}
+
+// Section headings carry a roman numeral and sit on a hairline rule, like the
+// sections of a printed catalogue. Numbers reset per page.
+article {
+  counter-reset: section;
+}
+
+article h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  counter-increment: section;
+  padding: 0 0 0.4rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--lightgray) 78%, transparent);
+}
+
+article h2::before {
+  content: counter(section, upper-roman) ".";
+  flex: none;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.72em;
+  color: var(--tertiary);
+}
+
+// --- Links: a wave that draws in on hover ----------------------------------
+article a {
+  text-decoration: none;
+  background-image: linear-gradient(var(--tertiary), var(--tertiary));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+  padding-bottom: 1px;
+}
+
+article a:hover {
+  background-size: 100% 2px;
+}
+
+// --- Blockquotes as poetry -------------------------------------------------
+blockquote {
+  border-left: 3px solid var(--tertiary);
+  padding: 0.2rem 0 0.2rem 1.25rem;
+  font-family: var(--headerFont);
+  font-style: italic;
+  font-size: 1.08rem;
+  color: var(--darkgray);
+}
+
+// --- "Now" block (home) -------------------------------------------------------
+.now {
+  margin: 2.5rem 0 1rem;
+}
+
+.now-title {
+  margin: 0 0 0.6rem;
+  font-family: var(--headerFont);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--tertiary);
+}
+
+.now-row {
+  display: grid;
+  grid-template-columns: 6.2rem 1fr;
+  align-items: baseline;
+  gap: 0.8rem;
+  padding: 0.32rem 0;
+  font-size: 0.98rem;
+}
+
+.now-label {
+  font-family: var(--monoFont);
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+}
+
+// no internal-link highlight box in the Now row — keep it flush
+.now a {
+  background-color: transparent;
+}
+
+@media (max-width: 520px) {
+  .now-row {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
+    padding: 0.45rem 0;
+  }
+}
+
+// --- Poems (reader view) ------------------------------------------------------
+// Poem pages are a bare, centred reading view: no sidebar, no footer, no
+// artwork — just the poem, set in a gorgeous serif on the plain page.
+.poem {
+  font-family: var(--headerFont);
+  font-size: 1.28rem;
+  font-weight: 400;
+  line-height: 1.9;
+  max-width: 34rem;
+}
+
+// preserve the poet's own line breaks
+.poem p {
+  white-space: pre-line;
+  margin: 0 0 1.7rem;
+}
+
+// a quiet back link at the top of the reader view
+.poem-back {
+  display: inline-block;
+  margin: 0 0 3rem;
+  font-family: var(--monoFont);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.poem-back:hover {
+  color: var(--dark);
+}
+
+// the reader shell: no sidebar/footer, a single centred column
+body:has(.center .poem-page) {
+  .left.sidebar,
+  .right.sidebar,
+  footer,
+  .breadcrumb-container {
+    display: none;
+  }
+
+  // drop the 3-column page grid; flex-centre a single reader column
+  #quartz-body {
+    display: flex !important;
+    justify-content: center;
+  }
+
+  #quartz-body > .center {
+    flex: 0 1 40rem;
+    min-width: 0;
+    max-width: 40rem !important;
+    margin: 0 !important;
+    padding: clamp(3rem, 8vh, 6rem) 1.5rem 5rem !important;
+  }
+
+  // the title is h1.article-title (a sibling of <article>, not inside it)
+  h1.article-title,
+  article h1 {
+    text-align: center;
+    font-size: 2.4rem;
+    margin: 0 0 0.6rem;
+  }
+
+  // back link centred under the title — drop the internal-link highlight box
+  .poem-back {
+    display: block;
+    text-align: center;
+    margin: 0 0 3rem;
+    background: none;
+  }
+
+  // poem block centred within the column, lines left-aligned
+  .poem {
+    margin: 0 auto;
+  }
+
+  // no catalogue numbering or rules inside a poem (e.g. multi-part pieces)
+  article h2 {
+    display: block;
+    border-bottom: none;
+    padding: 0;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  article h2::before {
+    content: none;
+  }
+
+  .center hr {
+    display: none;
+  }
+}
+
+// Hover popovers are disabled site-wide (enablePopovers: false). Poem links
+// instead get a runic shimmer on hover — see the Poetry section below.
+
+// --- End mark ("Finis") -------------------------------------------------------
+// A small tombstone closing every leaf page; index/folder pages skip it.
+body:not([data-slug$="index"]) article::after {
+  content: "∎";
+  display: block;
+  text-align: center;
+  margin: 2.75rem 0 0.25rem;
+  font-size: 0.85rem;
+  color: var(--tertiary);
+}
+
+// --- Book-style running text --------------------------------------------------
+// Consecutive paragraphs indent their first line and close the gap, the way
+// prose sets on a printed page. (Not in the poem reader view.)
+body:not(:has(.center .poem-page)) article p + p {
+  margin-top: 0;
+  text-indent: 1.5em;
+}
+
+// --- CV on the home page: minimal, elegant -----------------------------------
+// Smaller, lighter section headers.
+body[data-slug="index"] article h2 {
+  font-size: 1.16rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.35rem;
+  padding-bottom: 0.28rem;
+}
+
+// tighter ornament break on the compact home page
+body[data-slug="index"] article hr {
+  margin: 1.3rem 0;
+}
+
+// Entries: no bullets, crisp rhythm. The name carries the line in full ink;
+// role and dates recede to a soft grey.
+body[data-slug="index"] article ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.2rem 0 0;
+}
+
+body[data-slug="index"] article li {
+  padding: 0.16rem 0;
+  line-height: 1.5;
+  color: var(--tertiary);
+}
+
+body[data-slug="index"] article li::marker,
+body[data-slug="index"] article li::before {
+  content: none;
+}
+
+body[data-slug="index"] article li strong {
+  color: var(--dark);
+  font-weight: 600;
+}
+
+// --- Ornament section breaks --------------------------------------------------
+// A small centred mark instead of a horizontal rule.
+article hr {
+  border: none;
+  height: auto;
+  background: none;
+  text-align: center;
+  margin: 2.75rem 0;
+}
+
+article hr::before {
+  content: "· · ·";
+  color: var(--tertiary);
+  letter-spacing: 0.5em;
+  font-size: 1.05rem;
+}
+
+// --- "Off the clock" contents ------------------------------------------------
+// A book's table of contents: chapter numerals, dot leaders, italic hints.
+.toc-index {
+  max-width: 480px;
+  margin: 2.25rem 0 2.5rem;
+}
+
+.toc-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  padding: 0.72rem 0.2rem;
+  text-decoration: none;
+  background: none;
+}
+
+.toc-row + .toc-row {
+  border-top: 1px solid color-mix(in oklab, var(--lightgray) 60%, transparent);
+}
+
+.toc-num {
+  font-family: var(--headerFont);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--tertiary);
+  min-width: 2rem;
+  white-space: nowrap;
+}
+
+.toc-title {
+  font-family: var(--headerFont);
+  font-weight: 600;
+  font-size: 1.08rem;
+  color: var(--dark);
+  transition: color 0.25s ease;
+}
+
+.toc-row:hover .toc-title {
+  color: var(--secondary);
+}
+
+// The contents lists replace the auto folder listing on these pages only.
+body[data-slug="off-the-clock/index"] .page-listing,
+body[data-slug="off-the-clock/poetry/index"] .page-listing {
+  display: none;
+}
+
+// --- Explorer: always-open flat list, no fold arrows -------------------------
+// Kill the desktop collapse toggle and pin the tree open. Mobile keeps its
+// hamburger overlay behavior.
+@media all and (min-width: 801px) {
+  .explorer button.desktop-explorer {
+    display: none;
+  }
+
+  .explorer,
+  .explorer.collapsed {
+    flex: 0 1 auto;
+  }
+
+  .explorer .explorer-content {
+    display: block;
+    margin-top: 0;
+  }
+}
+
+// No per-folder fold arrows anywhere — folders are plain links.
+.explorer .folder-icon {
+  display: none;
+}
+
+// Folders always open.
+.explorer-content .folder-outer {
+  visibility: visible;
+  grid-template-rows: 1fr;
+}
+
+// "Off the clock" keeps its own links on its page — the sidebar shows only the
+// top-level entry, not the nested Articles/Music/Poetry/Reading sub-tree.
+.explorer-content li:has(> .folder-container[data-folderpath^="off-the-clock"]) > .folder-outer {
+  display: none;
+}
+
+// Sidebar navigation: quiet serif links, nothing more.
+.explorer a.nav-file-title,
+.explorer .folder-title,
+.explorer a.folder-button {
+  font-family: var(--headerFont);
+  font-size: 1.06rem;
+  font-weight: 600;
+  font-style: normal;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+// color + opacity only on the link elements — NOT the folder-title span, or its
+// value would stack with the folder-button's and render "Off the clock" faint
+.explorer a.nav-file-title,
+.explorer a.folder-button {
+  color: var(--dark);
+  opacity: 0.82;
+  transition: opacity 0.2s ease;
+}
+
+.explorer .folder-title {
+  color: var(--dark); // inherit the button's opacity, don't add its own
+}
+
+// Even vertical rhythm: files and the folder title had different line-heights,
+// so the gaps between rows were uneven. Give each row the same box.
+.explorer a.nav-file-title,
+.explorer a.folder-button {
+  display: block;
+  line-height: 1.5;
+  padding-block: 0.34rem;
+}
+
+.explorer .folder-container {
+  line-height: 1.5;
+  align-items: baseline;
+}
+
+.explorer a.nav-file-title:hover,
+.explorer .folder-container:hover .folder-title,
+.explorer a.folder-button:hover {
+  opacity: 1;
+}
+
+// --- Sidebar page title ----------------------------------------------------
+.page-title,
+h2.page-title,
+.page-title a {
+  font-family: var(--headerFont);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+// --- Footer: render the links as icons -------------------------------------
+footer ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  list-style: none;
+  padding: 0;
+  margin-top: 0.7rem;
+}
+
+footer ul li {
+  margin: 0;
+}
+
+footer ul li a {
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  // hide the text label but keep it for screen readers
+  overflow: hidden;
+  text-indent: 110%;
+  white-space: nowrap;
+  color: var(--gray);
+  background-color: currentColor;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  transition: color 0.25s ease, transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+footer ul li a:hover {
+  color: var(--secondary);
+  transform: translateY(-3px) scale(1.12);
+}
+
+@mixin icon($svg) {
+  mask-image: url($svg);
+  -webkit-mask-image: url($svg);
+}
+
+footer ul li a[href^="mailto"] {
+  @include icon("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'/%3E%3C/svg%3E");
+}
+
+footer ul li a[href*="github.com"] {
+  @include icon("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E");
+}
+
+footer ul li a[href*="linkedin"] {
+  @include icon("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z'/%3E%3C/svg%3E");
+}
+
+footer ul li a[href*="x.com"] {
+  @include icon("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z'/%3E%3C/svg%3E");
+}
+
+footer ul li a[href*="medium.com"] {
+  @include icon("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z'/%3E%3C/svg%3E");
+}
+
+// --- Motion keyframes ------------------------------------------------------
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Respect users who'd rather not have motion.
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  article > *,
+  .center > .popover-hint > * {
+    animation: none !important;
+  }
+  footer ul li a {
+    transition: none;
+  }
+}
+
+// --- Sidebar toolbar: search under the links, dark mode as a switch ------------
+// The toolbar group (search + darkmode) renders below the explorer and stacks
+// vertically; left-align its children (the layout engine inlines align-self).
+.left.sidebar .flex-component {
+  margin-top: 0.9rem;
+}
+
+.left.sidebar .flex-component > div {
+  align-self: flex-start !important;
+}
+
+// Dark/light mode as a small monochrome pill switch. The default sun/moon
+// icons are hidden; the thumb slides right in dark mode. Track and thumb use
+// theme variables, so the switch re-inks itself when the palette flips.
+button.darkmode {
+  position: relative;
+  width: 42px;
+  height: 22px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--lightgray);
+  border-radius: 11px;
+  background: var(--lightgray);
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+button.darkmode svg {
+  display: none;
+}
+
+button.darkmode::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--dark);
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+:root[saved-theme="dark"] button.darkmode::after {
+  transform: translateX(20px);
+}
