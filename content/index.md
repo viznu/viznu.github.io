@@ -22,4 +22,5 @@ on technical AI safety**.
 - Email — [vnair91@gmail.com](mailto:vnair91@gmail.com)
 - GitHub — [github.com/viznu](https://github.com/viznu)
 - LinkedIn — [linkedin.com/in/vishnu-nair](https://www.linkedin.com/in/vishnu-nair)
+- X — [x.com/visceralnair](https://x.com/visceralnair)
 - Medium — [medium.com/@vsnr](https://medium.com/@vsnr)

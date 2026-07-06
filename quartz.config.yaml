@@ -202,6 +202,7 @@ plugins:
         Email: mailto:vnair91@gmail.com
         GitHub: https://github.com/viznu
         LinkedIn: https://www.linkedin.com/in/vishnu-nair
+        X: https://x.com/visceralnair
         Medium: https://medium.com/@vsnr
   - source: github:quartz-community/recent-notes
     enabled: false
