@@ -4,10 +4,9 @@ title: Off the clock
 
 Away from the terminal, I write poetry and make music.
 
-I'm a published poet — my verse tends toward the elegiac: memory, language, the
-sea, light, fatherhood. On the music side, I've fronted two semi-professional
-bands, been featured as a musician in *The Times of India*, and keep an ongoing
-home-recording and composition practice.
+I write poetry — mostly elegiac, circling memory, language, the sea, light,
+fatherhood. On the music side, I've fronted two semi-professional bands and keep
+an ongoing home-recording and composition practice.
 
 <!--
   This section is intentionally quiet. Pick a few pieces to feature and I'll add
