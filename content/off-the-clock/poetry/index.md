@@ -45,44 +45,38 @@ title: Poetry
     <span class="toc-leader"></span>
     <span class="toc-hint">the boats of the moon</span>
   </a>
-  <a class="toc-row" href="/off-the-clock/poetry/my-bluest-despairs">
-    <span class="toc-num">viii.</span>
-    <span class="toc-title">My bluest despairs</span>
-    <span class="toc-leader"></span>
-    <span class="toc-hint">this valley of time</span>
-  </a>
   <a class="toc-row" href="/off-the-clock/poetry/nu-poyam">
-    <span class="toc-num">ix.</span>
+    <span class="toc-num">viii.</span>
     <span class="toc-title">Nu poyam</span>
     <span class="toc-leader"></span>
     <span class="toc-hint">stare it down</span>
   </a>
   <a class="toc-row" href="/off-the-clock/poetry/the-contrite-dregs">
-    <span class="toc-num">x.</span>
+    <span class="toc-num">ix.</span>
     <span class="toc-title">the contrite dregs</span>
     <span class="toc-leader"></span>
     <span class="toc-hint">the monsoons are a-comin</span>
   </a>
   <a class="toc-row" href="/off-the-clock/poetry/uno">
-    <span class="toc-num">xi.</span>
+    <span class="toc-num">x.</span>
     <span class="toc-title">uno</span>
     <span class="toc-leader"></span>
     <span class="toc-hint">the blankness of the sea</span>
   </a>
   <a class="toc-row" href="/off-the-clock/poetry/untitled-may">
-    <span class="toc-num">xii.</span>
+    <span class="toc-num">xi.</span>
     <span class="toc-title">Untitled may 2</span>
     <span class="toc-leader"></span>
     <span class="toc-hint">a foreign tongue</span>
   </a>
   <a class="toc-row" href="/off-the-clock/poetry/where-do-all-the-thoughts">
-    <span class="toc-num">xiii.</span>
+    <span class="toc-num">xii.</span>
     <span class="toc-title">Where do all the thoughts of</span>
     <span class="toc-leader"></span>
     <span class="toc-hint">love will stay your sails</span>
   </a>
   <a class="toc-row" href="/off-the-clock/poetry/metanoia">
-    <span class="toc-num">xiv.</span>
+    <span class="toc-num">xiii.</span>
     <span class="toc-title">Metanoia</span>
     <span class="toc-leader"></span>
     <span class="toc-hint">this moment is infinity</span>
