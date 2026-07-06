@@ -21,44 +21,32 @@ title: Poetry
     <span class="toc-leader"></span>
     <span class="toc-hint">the want of wanting</span>
   </a>
-  <a class="toc-row" href="/off-the-clock/poetry/graveyard-at-the-edge-of-the-city">
-    <span class="toc-num">iv.</span>
-    <span class="toc-title">Graveyard at the Edge of the City</span>
-    <span class="toc-leader"></span>
-    <span class="toc-hint">yesterday's tombstones</span>
-  </a>
-  <a class="toc-row" href="/off-the-clock/poetry/nu-poyam">
-    <span class="toc-num">v.</span>
-    <span class="toc-title">Nu Poyam</span>
-    <span class="toc-leader"></span>
-    <span class="toc-hint">stare it down</span>
-  </a>
   <a class="toc-row" href="/off-the-clock/poetry/the-contrite-dregs">
-    <span class="toc-num">vi.</span>
+    <span class="toc-num">iv.</span>
     <span class="toc-title">The Contrite Dregs</span>
     <span class="toc-leader"></span>
     <span class="toc-hint">the monsoons are a-comin</span>
   </a>
   <a class="toc-row" href="/off-the-clock/poetry/uno">
-    <span class="toc-num">vii.</span>
+    <span class="toc-num">v.</span>
     <span class="toc-title">Uno</span>
     <span class="toc-leader"></span>
     <span class="toc-hint">the blankness of the sea</span>
   </a>
   <a class="toc-row" href="/off-the-clock/poetry/untitled-may">
-    <span class="toc-num">viii.</span>
+    <span class="toc-num">vi.</span>
     <span class="toc-title">Untitled May 2</span>
     <span class="toc-leader"></span>
     <span class="toc-hint">a foreign tongue</span>
   </a>
   <a class="toc-row" href="/off-the-clock/poetry/where-do-all-the-thoughts">
-    <span class="toc-num">ix.</span>
+    <span class="toc-num">vii.</span>
     <span class="toc-title">Where Do All the Thoughts Of</span>
     <span class="toc-leader"></span>
     <span class="toc-hint">love will stay your sails</span>
   </a>
   <a class="toc-row" href="/off-the-clock/poetry/metanoia">
-    <span class="toc-num">x.</span>
+    <span class="toc-num">viii.</span>
     <span class="toc-title">Metanoia</span>
     <span class="toc-leader"></span>
     <span class="toc-hint">this moment is infinity</span>
