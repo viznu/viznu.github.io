@@ -1,37 +1,127 @@
 @use "./variables.scss" as *;
 
-// --- Home page hero ---------------------------------------------------------
+// ===========================================================================
+//  "Sea & light" — a literary, playful theme
+//  Motifs: sea, light, horizon, language. Sand paper + sea-teal + warm amber.
+// ===========================================================================
+
+// --- Paper grain -----------------------------------------------------------
+// A whisper of texture so the sand background doesn't read as flat white.
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+:root[saved-theme="dark"] body::before {
+  opacity: 0.7;
+}
+
+// --- Home page hero --------------------------------------------------------
 .hero {
+  position: relative;
   display: flex;
-  gap: 1.75rem;
+  gap: 2rem;
   align-items: center;
   flex-wrap: wrap;
-  margin: 0.5rem 0 2.25rem;
+  margin: 0.5rem 0 0;
+  padding-bottom: 2.4rem;
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+// a horizon: one hairline under the hero, fading out at both ends
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--gray) 50%, transparent) 20%,
+    color-mix(in oklab, var(--gray) 50%, transparent) 80%,
+    transparent
+  );
+}
+
+// the intro paragraph as a lede
+.hero ~ p {
+  margin-top: 2.1rem;
+  font-size: 1.12rem;
+  line-height: 1.8;
+}
+
+.hero-photo-wrap {
+  position: relative;
+  flex-shrink: 0;
+  line-height: 0;
 }
 
 .hero-photo {
-  width: 168px;
-  height: 168px;
+  width: 172px;
+  height: 172px;
   border-radius: 50%;
   object-fit: cover;
-  flex-shrink: 0;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16);
+  border: 1px solid var(--lightgray);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.5s ease;
+}
+
+// Playful, but quiet: a small lean on hover.
+.hero-photo-wrap:hover .hero-photo {
+  transform: rotate(-2.5deg) scale(1.03);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.16);
 }
 
 .hero-text {
-  flex: 1 1 260px;
+  flex: 1 1 280px;
 }
 
 .hero-text h1 {
-  margin: 0 0 0.4rem;
-  font-size: 2.4rem;
-  line-height: 1.1;
+  margin: 0 0 0.5rem;
+  font-family: var(--headerFont);
+  font-size: clamp(2.5rem, 6vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  // sea → light gradient across the name
+  background: linear-gradient(
+    100deg,
+    var(--dark) 0%,
+    var(--secondary) 55%,
+    var(--tertiary) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .hero-text .tagline {
+  margin: 0 0 0.5rem;
+  font-size: 1.12rem;
+  color: var(--darkgray);
+}
+
+.hero-text .hero-meta {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
   color: var(--gray);
+  font-style: italic;
+}
+
+.hero-text .hero-meta span {
+  color: var(--secondary);
+  font-style: normal;
+  font-weight: 600;
 }
 
 @media (max-width: 800px) {
@@ -39,17 +129,249 @@
     justify-content: center;
     text-align: center;
   }
+  .hero-text h1 {
+    // gradient text needs a solid fallback when centered on small screens
+    background: none;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    color: var(--dark);
+  }
 }
+
+// --- Content: staggered arrival --------------------------------------------
+.center > .popover-hint > *,
+article > * {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+// gentle stagger for the first handful of blocks
+article > *:nth-child(1) { animation-delay: 0.04s; }
+article > *:nth-child(2) { animation-delay: 0.10s; }
+article > *:nth-child(3) { animation-delay: 0.16s; }
+article > *:nth-child(4) { animation-delay: 0.22s; }
+article > *:nth-child(5) { animation-delay: 0.28s; }
 
 .center {
-  max-width: 750px;
+  max-width: 760px;
 }
 
-// --- Footer: render the links as icons --------------------------------------
+// --- Headings & prose ------------------------------------------------------
+article h1,
+article h2,
+article h3 {
+  font-family: var(--headerFont);
+  letter-spacing: -0.01em;
+}
+
+article h2 {
+  position: relative;
+  padding-left: 0.9rem;
+}
+
+// a little tick — a mark of light — before section headings
+article h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.16em;
+  bottom: 0.16em;
+  width: 4px;
+  border-radius: 4px;
+  background: linear-gradient(var(--secondary), var(--tertiary));
+}
+
+// --- Links: a wave that draws in on hover ----------------------------------
+article a {
+  text-decoration: none;
+  background-image: linear-gradient(var(--tertiary), var(--tertiary));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+  padding-bottom: 1px;
+}
+
+article a:hover {
+  background-size: 100% 2px;
+}
+
+// --- Blockquotes as poetry -------------------------------------------------
+blockquote {
+  border-left: 3px solid var(--tertiary);
+  padding: 0.2rem 0 0.2rem 1.25rem;
+  font-family: var(--headerFont);
+  font-style: italic;
+  font-size: 1.08rem;
+  color: var(--darkgray);
+}
+
+// --- "Now" block (home) -------------------------------------------------------
+.now {
+  margin: 2.5rem 0 1rem;
+}
+
+.now-title {
+  margin: 0 0 0.6rem;
+  font-family: var(--headerFont);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--tertiary);
+}
+
+.now-row {
+  display: grid;
+  grid-template-columns: 6.2rem 1fr;
+  gap: 0.8rem;
+  padding: 0.32rem 0;
+  font-size: 0.98rem;
+}
+
+.now-label {
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  color: var(--gray);
+}
+
+@media (max-width: 520px) {
+  .now-row {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
+    padding: 0.45rem 0;
+  }
+}
+
+// --- End mark ("Finis") -------------------------------------------------------
+// A small tombstone closing every leaf page; index/folder pages skip it.
+body:not([data-slug$="index"]) article::after {
+  content: "∎";
+  display: block;
+  text-align: center;
+  margin: 2.75rem 0 0.25rem;
+  font-size: 0.85rem;
+  color: var(--tertiary);
+}
+
+// --- "Off the clock" contents ------------------------------------------------
+// A book's table of contents: chapter numerals, dot leaders, italic hints.
+.toc-index {
+  max-width: 480px;
+  margin: 2.25rem 0 2.5rem;
+}
+
+.toc-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  padding: 0.72rem 0.2rem;
+  text-decoration: none;
+  background: none;
+}
+
+.toc-row + .toc-row {
+  border-top: 1px solid color-mix(in oklab, var(--lightgray) 60%, transparent);
+}
+
+.toc-num {
+  font-family: var(--headerFont);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--tertiary);
+  min-width: 1.4rem;
+}
+
+.toc-title {
+  font-family: var(--headerFont);
+  font-weight: 600;
+  font-size: 1.08rem;
+  color: var(--dark);
+  transition: color 0.25s ease;
+}
+
+// dot leader, like a printed contents page
+.toc-leader {
+  flex: 1;
+  min-width: 2rem;
+  border-bottom: 2px dotted color-mix(in oklab, var(--gray) 55%, transparent);
+  transform: translateY(-0.28em);
+  transition: border-color 0.25s ease;
+}
+
+.toc-hint {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--gray);
+  transition: color 0.25s ease;
+  white-space: nowrap;
+}
+
+.toc-row:hover .toc-title {
+  color: var(--secondary);
+}
+
+.toc-row:hover .toc-leader {
+  border-color: var(--tertiary);
+}
+
+.toc-row:hover .toc-hint {
+  color: var(--darkgray);
+}
+
+@media (max-width: 520px) {
+  .toc-hint {
+    display: none;
+  }
+}
+
+// The contents list replaces the auto folder listing on this page only.
+body[data-slug="off-the-clock/index"] .page-listing {
+  display: none;
+}
+
+// --- Explorer: always-open flat list, no fold arrows -------------------------
+// Kill the desktop collapse toggle and pin the tree open. Mobile keeps its
+// hamburger overlay behavior.
+@media all and (min-width: 801px) {
+  .explorer button.desktop-explorer {
+    display: none;
+  }
+
+  .explorer,
+  .explorer.collapsed {
+    flex: 0 1 auto;
+  }
+
+  .explorer .explorer-content {
+    display: block;
+    margin-top: 0;
+  }
+}
+
+// No per-folder fold arrows anywhere — folders are plain links.
+.explorer .folder-icon {
+  display: none;
+}
+
+// Folders always open.
+.explorer-content .folder-outer {
+  visibility: visible;
+  grid-template-rows: 1fr;
+}
+
+// --- Sidebar page title ----------------------------------------------------
+.page-title,
+h2.page-title,
+.page-title a {
+  font-family: var(--headerFont);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+// --- Footer: render the links as icons -------------------------------------
 footer ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.15rem;
+  gap: 1.25rem;
   list-style: none;
   padding: 0;
   margin-top: 0.7rem;
@@ -61,8 +383,8 @@ footer ul li {
 
 footer ul li a {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 21px;
+  height: 21px;
   // hide the text label but keep it for screen readers
   overflow: hidden;
   text-indent: 110%;
@@ -75,11 +397,12 @@ footer ul li a {
   -webkit-mask-position: center;
   mask-size: contain;
   -webkit-mask-size: contain;
-  transition: color 0.2s ease;
+  transition: color 0.25s ease, transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 footer ul li a:hover {
   color: var(--secondary);
+  transform: translateY(-3px) scale(1.12);
 }
 
 @mixin icon($svg) {
@@ -105,4 +428,29 @@ footer ul li a[href*="x.com"] {
 
 footer ul li a[href*="medium.com"] {
   @include icon("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z'/%3E%3C/svg%3E");
+}
+
+// --- Motion keyframes ------------------------------------------------------
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Respect users who'd rather not have motion.
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  article > *,
+  .center > .popover-hint > * {
+    animation: none !important;
+  }
+  .hero-photo,
+  footer ul li a {
+    transition: none;
+  }
 }

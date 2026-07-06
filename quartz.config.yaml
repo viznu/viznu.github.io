@@ -16,30 +16,32 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Schibsted Grotesk
+      header: Fraunces
       body: Source Sans Pro
       code: IBM Plex Mono
     colors:
+      # "Sea & light" — sand paper, deep sea-ink, sea-teal + warm amber accents
       lightMode:
-        light: "#faf8f8"
-        lightgray: "#e5e5e5"
-        gray: "#b8b8b8"
-        darkgray: "#4e4e4e"
-        dark: "#2b2b2b"
-        secondary: "#284b63"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#fff23688"
+        light: "#f7f2e9"
+        lightgray: "#e6ddcb"
+        gray: "#9c917d"
+        darkgray: "#494540"
+        dark: "#20272a"
+        secondary: "#0f7373"
+        tertiary: "#d98a3d"
+        highlight: rgba(217, 138, 61, 0.13)
+        textHighlight: "#f4c66b88"
+      # "Night sea" — deep water, warm paper text, luminous teal + amber light
       darkMode:
-        light: "#161618"
-        lightgray: "#393639"
-        gray: "#646464"
-        darkgray: "#d4d4d4"
-        dark: "#ebebec"
-        secondary: "#7b97aa"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#b3aa0288"
+        light: "#0e1619"
+        lightgray: "#26332f"
+        gray: "#71817b"
+        darkgray: "#c9cfc7"
+        dark: "#ede9df"
+        secondary: "#4fb3ad"
+        tertiary: "#e6a95c"
+        highlight: rgba(79, 179, 173, 0.14)
+        textHighlight: "#e6a95c55"
 plugins:
   - source: github:quartz-community/created-modified-date
     enabled: true
@@ -127,6 +129,21 @@ plugins:
     enabled: true
   - source: github:quartz-community/explorer
     enabled: true
+    options:
+      title: ""
+      folderDefaultState: open
+      folderClickBehavior: link
+      useSavedState: false
+      filterFn: |
+        (node) => node.slugSegment !== "tags" && node.slugSegment !== "index"
+      sortFn: |
+        (a, b) => {
+          const rank = { "cv": 0, "research": 1, "off-the-clock": 2 };
+          const ra = a.slugSegment in rank ? rank[a.slugSegment] : 99;
+          const rb = b.slugSegment in rank ? rank[b.slugSegment] : 99;
+          if (ra !== rb) return ra - rb;
+          return (a.displayName || "").localeCompare(b.displayName || "", undefined, { numeric: true, sensitivity: "base" });
+        }
     layout:
       position: left
       priority: 50
@@ -176,7 +193,7 @@ plugins:
       priority: 30
       group: toolbar
   - source: github:quartz-community/reader-mode
-    enabled: true
+    enabled: false
     layout:
       position: left
       priority: 35
