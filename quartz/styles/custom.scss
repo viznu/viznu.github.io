@@ -330,7 +330,8 @@ body:not([data-slug$="index"]) article::after {
   font-style: italic;
   font-size: 0.85rem;
   color: var(--tertiary);
-  min-width: 1.4rem;
+  min-width: 2rem;
+  white-space: nowrap;
 }
 
 .toc-title {

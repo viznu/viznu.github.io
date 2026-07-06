@@ -135,7 +135,11 @@ plugins:
       folderClickBehavior: link
       useSavedState: false
       filterFn: |
-        (node) => node.slugSegment !== "tags" && node.slugSegment !== "index"
+        (node) =>
+          node.slugSegment !== "tags" &&
+          node.slugSegment !== "index" &&
+          // individual poems live in the Poetry contents page, not the sidebar
+          !(node.slugSegments && node.slugSegments.length > 2 && node.slugSegments[0] === "off-the-clock" && node.slugSegments[1] === "poetry")
       sortFn: |
         (a, b) => {
           const rank = { "cv": 0, "research": 1, "off-the-clock": 2 };
