@@ -241,6 +241,18 @@ blockquote {
   }
 }
 
+// --- Poems --------------------------------------------------------------------
+.poem {
+  white-space: pre-line;
+  line-height: 1.7;
+  margin: 0 0 3rem;
+  max-width: 34rem;
+}
+
+.poem p {
+  margin: 0 0 1.4rem;
+}
+
 // --- End mark ("Finis") -------------------------------------------------------
 // A small tombstone closing every leaf page; index/folder pages skip it.
 body:not([data-slug$="index"]) article::after {
