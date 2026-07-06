@@ -1,5 +1,5 @@
 ---
-title: "uno"
+title: "Uno"
 ---
 
 <!-- Artwork: drop an image at assets/uno.jpg (or .png) and uncomment:

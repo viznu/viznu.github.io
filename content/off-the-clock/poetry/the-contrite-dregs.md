@@ -1,5 +1,5 @@
 ---
-title: "the contrite dregs"
+title: "The Contrite Dregs"
 ---
 
 <!-- Artwork: drop an image at assets/the-contrite-dregs.jpg (or .png) and uncomment:

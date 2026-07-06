@@ -1,5 +1,5 @@
 ---
-title: "Nu poyam"
+title: "Nu Poyam"
 ---
 
 <!-- Artwork: drop an image at assets/nu-poyam.jpg (or .png) and uncomment:

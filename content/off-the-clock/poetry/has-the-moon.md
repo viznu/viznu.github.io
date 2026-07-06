@@ -1,5 +1,5 @@
 ---
-title: "Has the moon, your lover,"
+title: "Has the Moon, Your Lover,"
 ---
 
 <div class="poem-layout">

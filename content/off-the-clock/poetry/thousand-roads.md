@@ -1,5 +1,5 @@
 ---
-title: "All these thousand roads lead to the sea"
+title: "All These Thousand Roads Lead to the Sea"
 ---
 
 <div class="poem-layout">

@@ -1,5 +1,5 @@
 ---
-title: "Graveyard at the edge of the city"
+title: "Graveyard at the Edge of the City"
 ---
 
 <!-- Artwork: drop an image at assets/graveyard-at-the-edge-of-the-city.jpg (or .png) and uncomment:

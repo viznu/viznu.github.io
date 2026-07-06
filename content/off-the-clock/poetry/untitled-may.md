@@ -1,5 +1,5 @@
 ---
-title: "Untitled may 2"
+title: "Untitled May 2"
 ---
 
 <!-- Artwork: drop an image at assets/untitled-may.jpg (or .png) and uncomment:

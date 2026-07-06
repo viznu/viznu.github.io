@@ -1,5 +1,5 @@
 ---
-title: "an ode to memory"
+title: "An Ode to Memory"
 ---
 
 <div class="poem-layout">

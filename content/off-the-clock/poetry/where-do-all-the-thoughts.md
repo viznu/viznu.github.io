@@ -1,5 +1,5 @@
 ---
-title: "Where do all the thoughts of"
+title: "Where Do All the Thoughts Of"
 ---
 
 <!-- Artwork: drop an image at assets/where-do-all-the-thoughts.jpg (or .png) and uncomment:
