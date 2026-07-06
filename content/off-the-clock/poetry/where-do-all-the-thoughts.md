@@ -2,11 +2,11 @@
 title: "Where Do All the Thoughts Of"
 ---
 
-<!-- Artwork: drop an image at assets/where-do-all-the-thoughts.jpg, then follow the pattern in
-thousand-roads.md — wrap the page in <div class="poem-page" style="--art-color: #hex">
-(hex = a color pulled from the painting) and add:
-<img class="poem-art" src="assets/where-do-all-the-thoughts.jpg" alt="" />
--->
+<div class="poem-page" style="--art-color: #3a6068">
+
+<a class="poem-back" href="/off-the-clock/poetry/" aria-label="Back to poems">&#8592;</a>
+
+<img class="poem-art" src="assets/where-do-all-the-thoughts.jpg" alt="Illustration: a human head in profile, its silhouette filled with a seascape — a lighthouse, sailboats at sunset, a bridged old-country city, constellations, a crab and seashells." />
 
 <div class="poem">
 
@@ -52,5 +52,7 @@ And ragged breath,
 Will come a storm.
 Hold still but, dearest.
 Love will stay your sails.
+
+</div>
 
 </div>
