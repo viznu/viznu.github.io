@@ -2,7 +2,10 @@
 title: "An Ode to Memory"
 ---
 
-<div class="poem-layout">
+<div class="poem-page" style="--art-color: #c88b2f">
+
+<img class="poem-art" src="assets/an-ode-to-memory.jpg" alt="Watercolor: a golden moon in washes of teal, ochre and rose over still water." />
+
 <div class="poem">
 
 slowly.
@@ -29,7 +32,5 @@ but emboldens
 the low,sooty fires of want.
 
 </div>
-
-<img class="poem-art" src="assets/an-ode-to-memory.jpg" alt="Watercolor: a golden moon in washes of teal, ochre and rose over still water." />
 
 </div>

@@ -2,7 +2,9 @@
 title: "The Contrite Dregs"
 ---
 
-<!-- Artwork: drop an image at assets/the-contrite-dregs.jpg (or .png) and uncomment:
+<!-- Artwork: drop an image at assets/the-contrite-dregs.jpg, then follow the pattern in
+thousand-roads.md — wrap the page in <div class="poem-page" style="--art-color: #hex">
+(hex = a color pulled from the painting) and add:
 <img class="poem-art" src="assets/the-contrite-dregs.jpg" alt="" />
 -->
 

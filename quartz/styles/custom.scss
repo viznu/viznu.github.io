@@ -255,42 +255,43 @@ blockquote {
   margin: 0 0 1.3rem;
 }
 
-// artwork above a poem
+// Poem pages with artwork: a .poem-page wrapper carries --art-color (extracted
+// from the painting). The art renders as a large hero, and a fixed ambient
+// wash tints the whole page in the painting's palette. color-mix against
+// transparent keeps it working over both light and dark backgrounds.
+.poem-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--art-color, transparent) 24%, transparent),
+    transparent 78%
+  );
+}
+
+// popovers clone page content — never let a cloned wrapper tint the live page
+.popover .poem-page::before {
+  content: none;
+}
+
 .poem-art {
   width: 100%;
-  max-height: 380px;
+  height: min(58vh, 600px);
   object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid var(--lightgray);
-  margin: 0.5rem 0 2.25rem;
-}
-
-// poem + artwork side by side; art rides along on scroll
-.poem-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(220px, 38%, 320px);
-  gap: 2.25rem;
-  align-items: start;
-}
-
-.poem-layout .poem-art {
-  position: sticky;
-  top: 1.5rem;
-  max-height: none;
-  object-fit: contain;
-  margin: 0.35rem 0 0;
+  object-position: var(--art-focus, center);
+  border-radius: 14px;
+  border: 1px solid color-mix(in oklab, var(--art-color, var(--gray)) 35%, var(--lightgray));
+  box-shadow: 0 26px 64px -24px color-mix(in oklab, var(--art-color, #000000) 60%, transparent);
+  margin: 0.4rem 0 2.5rem;
 }
 
 @media (max-width: 800px) {
-  .poem-layout {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  .poem-layout .poem-art {
-    position: static;
-    order: -1;
-    margin: 0.25rem 0 1.9rem;
+  .poem-art {
+    height: min(44vh, 420px);
+    border-radius: 10px;
   }
 }
 
@@ -311,17 +312,15 @@ blockquote {
     display: none;
   }
 
-  .poem-layout {
-    display: block;
-  }
-
   img.poem-art {
     display: block;
     width: 100%;
+    height: 15rem;
     max-height: 20rem;
     object-fit: cover;
     margin: 0;
     border: none;
+    box-shadow: none;
     border-radius: inherit;
     position: static;
   }

@@ -2,7 +2,9 @@
 title: "Metanoia"
 ---
 
-<!-- Artwork: drop an image at assets/metanoia.jpg (or .png) and uncomment:
+<!-- Artwork: drop an image at assets/metanoia.jpg, then follow the pattern in
+thousand-roads.md — wrap the page in <div class="poem-page" style="--art-color: #hex">
+(hex = a color pulled from the painting) and add:
 <img class="poem-art" src="assets/metanoia.jpg" alt="" />
 -->
 

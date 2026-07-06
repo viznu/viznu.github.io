@@ -2,7 +2,10 @@
 title: "Has the Moon, Your Lover,"
 ---
 
-<div class="poem-layout">
+<div class="poem-page" style="--art-color: #c25731; --art-focus: top">
+
+<img class="poem-art" src="assets/has-the-moon.jpg" alt="Folk-art night scene: a woman with dark hair beneath a gold crescent moon, jasmine flowers, a mandolin, a sailboat on a moonlit sea, and a blue bird with a shattering mosaic wing." />
+
 <div class="poem">
 
 Has the moon, your lover,
@@ -33,7 +36,5 @@ By doubt's leaden feathers,
 an ocean and half away.
 
 </div>
-
-<img class="poem-art" src="assets/has-the-moon.jpg" alt="Folk-art night scene: a woman with dark hair beneath a gold crescent moon, jasmine flowers, a mandolin, a sailboat on a moonlit sea, and a blue bird with a shattering mosaic wing." />
 
 </div>
