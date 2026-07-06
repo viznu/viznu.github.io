@@ -253,6 +253,16 @@ blockquote {
   margin: 0 0 1.4rem;
 }
 
+// artwork above a poem
+.poem-art {
+  width: 100%;
+  max-height: 380px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--lightgray);
+  margin: 0.5rem 0 2.25rem;
+}
+
 // --- End mark ("Finis") -------------------------------------------------------
 // A small tombstone closing every leaf page; index/folder pages skip it.
 body:not([data-slug$="index"]) article::after {
@@ -335,8 +345,9 @@ body:not([data-slug$="index"]) article::after {
   }
 }
 
-// The contents list replaces the auto folder listing on this page only.
-body[data-slug="off-the-clock/index"] .page-listing {
+// The contents lists replace the auto folder listing on these pages only.
+body[data-slug="off-the-clock/index"] .page-listing,
+body[data-slug="off-the-clock/poetry/index"] .page-listing {
   display: none;
 }
 
