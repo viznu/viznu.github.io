@@ -1,17 +1,23 @@
 ---
-title: Your Name
+title: Vishnu Nair
 ---
 
-Hi — I'm **Your Name**. I work on machine learning and write about it here.
+I'm **Vishnu Nair** — a machine learning engineer working where large-scale
+systems meet LLM research. I'm currently a Senior Software Engineer on the
+AI/ML team at **Cisco ThousandEyes**, and I'm applying to **PhD and MS programs
+in AI/ML** in the US and Europe.
 
-This site is my landing page, [[blog/hello-world|blog]], and a public slice of my
-notes, all in one. Poke around via search (top left) or the graph (bottom right).
+My path has run from production data engineering and distributed systems toward
+the research questions underneath modern language models — reasoning, world
+models, in-context learning, and how the shape of training data shapes what a
+model can do.
 
-## Elsewhere
+- **[[research|Research]]** — what I'm thinking about
+- **[[cv|CV]]** — experience & education
+- **[[creative|Off the clock]]** — poetry & music
 
-- **GitHub** — https://github.com/your-username
-- **Email** — you@example.com
+## Contact
 
-## Recent writing
-
-- [[blog/hello-world|Hello, world]] — why I made this site
+- **Email** — [vnair91@gmail.com](mailto:vnair91@gmail.com)
+- **GitHub** — https://github.com/your-username <!-- TODO -->
+- **LinkedIn** — https://www.linkedin.com/in/your-handle <!-- TODO -->

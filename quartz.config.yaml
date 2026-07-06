@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: "Your Name" # TODO: change to your name / site title
+  pageTitle: "Vishnu Nair"
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
@@ -198,8 +198,9 @@ plugins:
     enabled: true
     options:
       links:
-        GitHub: https://github.com/your-username # TODO
-        Email: mailto:you@example.com # TODO
+        Email: mailto:vnair91@gmail.com
+        GitHub: https://github.com/your-username # TODO: your GitHub username
+        LinkedIn: https://www.linkedin.com/in/your-handle # TODO: your LinkedIn
   - source: github:quartz-community/recent-notes
     enabled: false
   - source: github:quartz-community/spacer
