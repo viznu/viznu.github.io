@@ -294,13 +294,17 @@ blockquote {
   }
 }
 
-// --- Poem hover previews: artwork only ----------------------------------------
+// --- Hover previews -------------------------------------------------------------
+// No breadcrumbs or link lists in any popover — content only.
+.popover .popover-inner nav {
+  display: none;
+}
+
 // When a hover popover contains poem artwork, show just the painting.
 .popover .popover-inner:has(img.poem-art) {
   padding: 0;
 
   h1,
-  nav,
   .poem,
   p,
   hr {

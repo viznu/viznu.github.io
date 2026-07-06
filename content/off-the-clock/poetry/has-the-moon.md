@@ -2,10 +2,7 @@
 title: "Has the moon, your lover,"
 ---
 
-<!-- Artwork: drop an image at assets/has-the-moon.jpg (or .png) and uncomment:
-<img class="poem-art" src="assets/has-the-moon.jpg" alt="" />
--->
-
+<div class="poem-layout">
 <div class="poem">
 
 Has the moon, your lover,
@@ -34,5 +31,9 @@ That bespoke the contours of your soul?
 But here I lie, a bird broken,
 By doubt's leaden feathers,
 an ocean and half away.
+
+</div>
+
+<img class="poem-art" src="assets/has-the-moon.jpg" alt="Folk-art night scene: a woman with dark hair beneath a gold crescent moon, jasmine flowers, a mandolin, a sailboat on a moonlit sea, and a blue bird with a shattering mosaic wing." />
 
 </div>
