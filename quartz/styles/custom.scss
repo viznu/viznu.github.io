@@ -674,7 +674,17 @@ h2.page-title,
 
 // --- Social links: icons in the left sidebar --------------------------------
 // The footer component is positioned in the left sidebar (see the layout block
-// in quartz.config.yaml); only its icons show — the credit line is hidden.
+// in quartz.config.yaml). Every page frame also renders a footer of its own at
+// the bottom of the page, so that copy is hidden and only the sidebar one shows.
+footer {
+  display: none;
+}
+
+.left.sidebar footer {
+  display: block;
+}
+
+// only the icons show in the sidebar — the "Created with" credit line is hidden
 .left.sidebar footer p {
   display: none;
 }
@@ -863,6 +873,14 @@ button.darkmode::after {
   .left.sidebar .explorer,
   .left.sidebar .flex-component {
     width: 140px;
+  }
+
+  // base.scss pins every footer to `min-width: 100%` via an id selector, so the
+  // social row needs the same reach to sit in the portrait's column.
+  .page > #quartz-body .left.sidebar footer {
+    width: 140px;
+    min-width: 140px;
+    max-width: 140px;
   }
 
   // The wordmark sits in the same column, so centre it too rather than leave
