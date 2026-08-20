@@ -1,50 +1,77 @@
 /*
  * Close the mobile nav after navigating.
  *
- * The explorer plugin already tries to collapse itself on `nav`, but it gates
- * that on `Element.checkVisibility()`, which Safari only shipped in 17.4. On
- * anything older the guard is falsy, so the menu is never collapsed — it opens
- * on load and stays open across navigation, leaving the toggle inverted.
+ * Three things conspire to leave it open:
  *
- * This does the same job with a feature test every browser passes, and also
- * closes the menu the moment a link inside it is clicked, so it retracts
- * immediately rather than waiting for the page swap.
+ *  1. The explorer plugin collapses itself on `nav`, but gates that on
+ *     Element.checkVisibility(), which Safari only shipped in 17.4. On older
+ *     Safari the guard is falsy, so it never collapses - and the menu even
+ *     comes up open on first load, leaving the toggle inverted.
+ *  2. The SPA swaps the body with micromorph, and the incoming markup carries
+ *     no `collapsed` class, so a menu closed before navigating is patched back
+ *     open the moment the new page lands.
+ *  3. The toggle button starts out `hide-until-loaded` (display:none) until the
+ *     plugin marks the tree ready, so its computed display cannot be used to
+ *     detect the mobile layout during early startup. The breakpoint media query
+ *     is checked instead - it matches $mobile in the Quartz stylesheet.
+ *
+ * Closing once on click is therefore not enough; the close is re-asserted over
+ * the following half second so it survives the body swap and any late tree
+ * render. It is also deliberately *not* bound to `render`, and skips `nav`
+ * events that do not change the path, so a late re-render can never slam shut
+ * a menu the user has just opened - which on a slow connection is exactly what
+ * a naive version does.
  */
 ;(() => {
   "use strict"
 
-  // The mobile toggle is display:none above the breakpoint, so its computed
-  // display doubles as "are we in the mobile layout?".
-  const isMobileNav = (btn) => btn && getComputedStyle(btn).display !== "none"
+  if (window.__mobileNavFix) return // the SPA re-adds head scripts on each nav
+  window.__mobileNavFix = true
+
+  const MOBILE = "(max-width: 800px)" // $mobile in quartz/styles/variables.scss
+  const REASSERT_MS = [0, 60, 160, 360, 620] // covers the swap and a late render
 
   function collapseAll() {
+    if (!matchMedia(MOBILE).matches) return
     for (const explorer of document.getElementsByClassName("explorer")) {
-      const btn = explorer.querySelector(".mobile-explorer")
-      if (!isMobileNav(btn)) continue
       explorer.classList.add("collapsed")
       explorer.setAttribute("aria-expanded", "false")
-      document.documentElement.classList.remove("mobile-no-scroll")
     }
+    document.documentElement.classList.remove("mobile-no-scroll")
   }
 
-  // Capture phase: fire before the SPA router swaps the page.
+  let timers = []
+  function collapseAndHold() {
+    timers.forEach(clearTimeout)
+    timers = REASSERT_MS.map((ms) => setTimeout(collapseAll, ms))
+    collapseAll()
+  }
+
+  // A link inside the menu was activated: close now, and stay closed across the
+  // body swap that follows.
   document.addEventListener(
     "click",
     (e) => {
-      const target = e.target
-      if (!target || !target.closest) return
-      const link = target.closest(".explorer a")
-      if (!link) return
-      collapseAll()
+      const t = e.target
+      if (t && t.closest && t.closest(".explorer a")) collapseAndHold()
     },
     true,
   )
 
-  // After navigation, and on first load. Deferred a frame so it lands after the
-  // plugin's own nav handler rather than racing it.
-  const onNav = () => requestAnimationFrame(collapseAll)
+  // First load, and any navigation that actually changes the page. Same-path
+  // `nav` events are ignored so they cannot close an open menu.
+  let lastPath = null
+  function onNav() {
+    const path = location.pathname
+    if (path === lastPath) return
+    lastPath = path
+    collapseAndHold()
+  }
+
   document.addEventListener("nav", onNav)
-  document.addEventListener("render", onNav)
-  if (document.readyState !== "loading") onNav()
-  else document.addEventListener("DOMContentLoaded", onNav)
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", onNav, { once: true })
+  } else {
+    onNav()
+  }
 })()
