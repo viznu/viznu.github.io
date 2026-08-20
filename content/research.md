@@ -122,7 +122,7 @@ Alongside it:
 - **BlueDot Impact — AGI Strategy** · 2026. Deployment risk, timelines, and strategy.
   [Certificate](https://bluedot.org/certification?id=recrXFAnedDvtUUBf).
 
-## Academic & research projects
+## Academic Projects
 
 - **Quantum-Computing-Resistant Cryptographic Scheme** (2017, JHU) — M.S. thesis
   implementing a post-quantum scheme in Go.
@@ -137,7 +137,10 @@ Alongside it:
 - **Panacea — ML Clinical Decision Support** (2015, C-DAC) — applied ML for clinical decisions.
 - **IoT Wireless Sensor Mesh for Farmland** (2013, VIT) — ZigBee-based remote agricultural monitoring.
 
----
+<!--
+Hidden from the page, kept here so it's easy to restore — delete the comment
+markers to bring it back.
 
 *GRE — Quant [170/170, 99th percentile](https://imfs.yolasite.com). GATE — 98th
 percentile (India rank ~1,500 / 200,000).*
+-->
