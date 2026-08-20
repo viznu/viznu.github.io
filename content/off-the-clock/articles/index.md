@@ -2,7 +2,7 @@
 title: Articles
 ---
 
-Occasional writing — notes on AI, safety, and whatever I'm thinking through.
+Occasional writing: notes on AI, safety, and whatever I'm thinking through.
 
 <!--
   To publish a new article: drop a markdown file in this folder

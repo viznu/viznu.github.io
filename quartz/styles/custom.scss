@@ -173,7 +173,7 @@ body::before {
     position: relative;
     flex-direction: column;
     gap: 0;
-    padding-top: 208px;
+    padding-top: 138px;
   }
 
   // The portrait is painted in CSS by default, so it survives no-JS, a failed
@@ -188,10 +188,10 @@ body::before {
     background-image: url("/assets/portrait-cutout.png");
     background-repeat: no-repeat;
     background-position: top center;
-    background-size: auto 200px;
+    background-size: auto 130px;
     filter: grayscale(1) contrast(1.02);
-    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 148px, transparent 200px);
-    mask-image: linear-gradient(180deg, #000 0%, #000 148px, transparent 200px);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 96px, transparent 130px);
+    mask-image: linear-gradient(180deg, #000 0%, #000 96px, transparent 130px);
   }
 
   .hero-portrait.has-canvas {

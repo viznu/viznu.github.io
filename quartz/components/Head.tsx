@@ -106,6 +106,9 @@ export default (() => {
             return resource
           }
         })}
+        {/* Closes the mobile nav after navigating; see the file for why the
+            explorer plugin's own attempt does not fire on older Safari. */}
+        <script src={joinSegments(baseDir, "static/mobile-nav.js")} defer />
       </head>
     )
   }

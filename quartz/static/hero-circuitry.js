@@ -86,7 +86,7 @@
       this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0)
 
       // Portrait box: centred across the top of the hero.
-      this.ph = Math.min(200, this.h * 0.52)
+      this.ph = Math.min(130, this.h * 0.52) // 65% of the original 200px
       this.pw = this.ph * PORTRAIT_AR
       this.px = (this.w - this.pw) / 2
       this.py = 0

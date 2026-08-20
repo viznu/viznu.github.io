@@ -20,7 +20,7 @@ configuration:
       body: Source Sans Pro
       code: IBM Plex Mono
     colors:
-      # Monochrome — bare black & white
+      # Monochrome: bare black & white
       lightMode:
         light: "#ffffff"
         lightgray: "#e6e6e6"
@@ -140,7 +140,7 @@ plugins:
         (node) =>
           node.slugSegment !== "tags" &&
           node.slugSegment !== "index" &&
-          // top-level entries only — no nested sub-pages in the sidebar
+          // top-level entries only, no nested sub-pages in the sidebar
           (!node.slugSegments || node.slugSegments.length <= 1)
       sortFn: |
         (a, b) => {
