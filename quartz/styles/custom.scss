@@ -145,10 +145,73 @@ body::before {
   font-weight: 600;
 }
 
+// The hero portrait host is mobile-only; desktop keeps the sidebar avatar.
+.hero-portrait {
+  display: none;
+}
+
 @media (max-width: 800px) {
   .hero {
     justify-content: center;
     text-align: center;
+  }
+
+  // "vsn" alone in the top-left corner — the portrait moves into the hero,
+  // centred over the name, so the two aren't stacked in the sidebar.
+  .page-title a::before {
+    display: none;
+  }
+
+  .page-title a {
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+  }
+
+  // Room above the name for the portrait, which the canvas paints.
+  .hero {
+    position: relative;
+    flex-direction: column;
+    gap: 0;
+    padding-top: 208px;
+  }
+
+  // The portrait is painted in CSS by default, so it survives no-JS, a failed
+  // script and reduced motion. When the canvas takes over it drops the
+  // background and draws the same image itself.
+  .hero-portrait {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url("/assets/portrait-cutout.png");
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: auto 200px;
+    filter: grayscale(1) contrast(1.02);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 148px, transparent 200px);
+    mask-image: linear-gradient(180deg, #000 0%, #000 148px, transparent 200px);
+  }
+
+  .hero-portrait.has-canvas {
+    background-image: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .hero-portrait-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  // Name and tagline ride above the circuitry. Reset the row-axis flex-basis:
+  // in a column flex container 280px would apply to height and open a gap.
+  .hero-text {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 auto;
   }
 }
 

@@ -3,6 +3,7 @@ title: Vishnu Nair
 ---
 
 <div class="hero">
+  <div class="hero-portrait" aria-hidden="true"></div>
   <div class="hero-text">
     <h1>Vishnu Nair</h1>
     <p class="tagline">Software &amp; AI/ML engineer, researcher — agentic systems, data platforms &amp; AI safety.</p>
@@ -45,3 +46,5 @@ learning, security, and AI safety.
 - **ML / frameworks** — PyTorch, TensorFlow, Jax, scikit-learn, CUDA, graph-augmented ML, FastAPI, Django, Flask, React.
 - **Cloud / infra** — AWS, Kubernetes, Datadog, Celery, memcached, Metabase, Tableau.
 - **Databases** — DynamoDB, Redshift, PostgreSQL, MySQL, Snowflake, Cassandra, MongoDB, Neo4j.
+
+<script src="/static/hero-circuitry.js" defer></script>
