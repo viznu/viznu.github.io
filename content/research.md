@@ -6,102 +6,60 @@ title: Research
 
 Independent experimental work, all public on GitHub:
 
-- **[jspace-obfuscation](https://github.com/viznu/jspace-obfuscation)**:
-  does the J-space (Jacobian-lens) oversight channel survive the optimization
-  pressure that collapses chain-of-thought monitoring? When a model is pressured
-  to hide a load-bearing concept from its CoT, does that concept stay detectable
-  in the J-space (the *disposition to verbalize* rather than the verbalization
-  itself), and at what task cost? A compute-independent testbed (built, runs,
-  13 tests green) with GPU lens-fitting and Qwen rollouts behind a swappable backend.
-- **[sandbag-bench](https://github.com/viznu/sandbag-bench)**:
-  can a model's own internals give away deliberate underperformance? A
-  natural-language-autoencoder readout of Qwen2.5-7B-Instruct's layer-20
-  activations is handed to a *blinded* extractor that never sees the model's
-  answer, and asked to separate a prompted sandbagger from a control that is
-  genuinely failing at low elicitation. The calibration gate passed (0.755
-  agreement, Wilson LB95 0.691, on 200 base-correct MMLU items), and the
-  detection experiment itself is scaffolded but not yet run.
+- **[jspace-obfuscation](https://github.com/viznu/jspace-obfuscation)**: does the
+  Jacobian-lens oversight channel survive the optimization pressure that collapses
+  chain-of-thought monitoring? Testbed built and running, with GPU lens-fitting
+  behind a swappable backend.
+- **[sandbag-bench](https://github.com/viznu/sandbag-bench)**: can a model's own
+  internals give away deliberate underperformance? Layer-20 activations are read
+  through a natural-language autoencoder and handed to a blinded extractor.
+  Calibration gate passed at 0.755 agreement; the detection run is pending.
 - **[contrastive-activation-trajectories](https://github.com/viznu/contrastive-activation-trajectories)**:
-  a controlled study of contrastive vs. non-contrastive representation
-  learning over a target LLM's internal activations, for monitoring
-  alignment-relevant behavioral state. Arrived at a careful methodological
-  negative result: on Instructed-Pairs (Qwen2.5-3B), the contrastive
-  objective is not load-bearing (untrained PCA matches it), with stress
-  tests documenting why.
-- **[jepa-alignment-probe](https://github.com/viznu/jepa-alignment-probe)**:
-  parked, and public as the record of what did not work. The JEPA-over-activations
-  line the contrastive work grew out of: masked-layer prediction encoders, and
-  JEPA-SCORE as a Jacobian-density anomaly detector over activation trajectories,
-  which came out at AUROC ≈ 0.50 across every variant tried and was confirmed by
-  a mirror-invariance check on the encoder's Jacobian singular values.
-- **[alignment-measure](https://github.com/viznu/alignment-measure)**:
-  does data curation alone produce a measurable alignment delta in
-  fine-tuned small models? Same base model, identical hyperparameters,
-  human-chosen vs. human-rejected training data (Anthropic hh-rlhf),
-  evaluated on truthfulness, toxicity, and bias benchmarks.
+  contrastive vs. non-contrastive probing of a model's activation trajectories. A
+  negative result: on Instructed-Pairs the contrastive objective is not
+  load-bearing, because untrained PCA matches it.
+- **[jepa-alignment-probe](https://github.com/viznu/jepa-alignment-probe)**: parked.
+  JEPA-SCORE as a Jacobian-density anomaly detector over activations came out at
+  AUROC ≈ 0.50 on every variant tried. Public as the record of what did not work.
+- **[alignment-measure](https://github.com/viznu/alignment-measure)**: does data
+  curation alone move alignment? One base model, fixed hyperparameters,
+  human-chosen vs. human-rejected hh-rlhf data, scored on truthfulness, toxicity
+  and bias.
 
 ## Multi-agent dynamics & oversight
 
 - **[bluedot-adversarial-dynamics](https://github.com/viznu/bluedot-adversarial-dynamics)**:
-  can a population of LLM agents coordinate trustworthily when no single node can
-  be trusted? Two experiments approach it from opposite ends. The first inserts an
-  **audit agent** into a competitive sales loop (El & Zou's "Moloch's Bargain"
-  setup, adapted to inference-time best-of-N pressure), and asks whether it repairs
-  the deception equilibrium, and what that costs in false positives on honest
-  pitches and in lost sales. The second treats the tipping threshold of Ashery et
-  al.'s LLM naming game as an **attack surface**: how small can an adversarial
-  committed faction be and still capture the population's convention? Before a
-  convention forms, 2 of 24 agents captured it in every run tested. No failing
-  faction size was found, so the threshold sits somewhere below 8% and is still
-  unmeasured. Small samples throughout, and reported as working pipelines rather
-  than settled numbers.
-- **multi-agent-testbed**: *in progress, not yet public.* A framework-neutral,
-  event-sourced testbed for controlled multi-agent experiments. Every meaningful
-  action is an append-only event, and what any individual agent could see is a
-  *projection* of the omniscient log, so "did this agent act on information it was
-  never supposed to have?" becomes an answerable question. Every multi-agent
-  configuration must name a compute-matched single-agent baseline; orchestration
-  patterns propose routing but only the World commits it; reproducibility is
-  declared per component rather than promised; and a crashed controller, an
-  exhausted budget, and a failed task stay three distinct terminal states. The
-  contracts layer and an end-to-end vertical slice run today.
+  two experiments on LLM populations under pressure. Can an audit agent repair a
+  deception equilibrium, and how small can an adversarial faction be and still
+  capture a population's convention? Before a convention forms, 2 of 24 agents was
+  enough in every run. Small samples: working pipelines, not settled results.
+- **multi-agent-testbed** *(private)*: an event-sourced testbed for controlled
+  multi-agent experiments. Every configuration must name a compute-matched
+  single-agent baseline, and infrastructure failure stays distinct from task
+  failure.
 
 ## AI application security
 
-At **NuGuard AI** I'm building an AI application security framework that assesses
-agentic LLM systems across SBOM graph analysis, static analysis, automated
-red-teaming, and policy validation, including an adversarial testing layer with
-multi-turn attack scenarios and canary-based detection of data exfiltration and
-out-of-scope agent behavior. The CLI is open source:
+At **NuGuard AI** I build an application security framework for agentic LLM
+systems: SBOM graph analysis, static analysis, automated red-teaming and policy
+validation, with canary-based detection of data exfiltration and out-of-scope
+agent behaviour. The CLI is open source:
 **[NuGuardAI/nuguard](https://github.com/NuGuardAI/nuguard)**.
-
-Alongside it:
 
 - **Insider Honeypots**: my team's project for the
   [Heron AI Security Research Fellowship](https://www.heronsec.ai/researchfellowship),
-  Autumn 2026 cohort. Runs September–November 2026.
-- **[training-data-custody](https://github.com/viznu/training-data-custody)**:
-  chain of custody for the *cleaning* side of training data. Proof-of-Learning and
-  friends can show a model was trained only on a specified dataset, but treat that
-  dataset as a trusted input; this asks the prior question of whether its contents
-  went through the processing they claim. A per-datum signed record (`input_hash`,
-  `output_hash`, transform chain, pipeline version), Merkle-batched under one
-  ed25519 manifest signature whose signed leaf count is what makes completeness
-  checkable. The verifier is stateless and offline. A demo runs eight attacks against it
-  (tampering, forgery, substitution, off-pipeline injection, cherry-picking and
-  three more), including the two it deliberately does not stop.
+  autumn 2026 cohort. Runs September–November 2026.
+- **[training-data-custody](https://github.com/viznu/training-data-custody)**: chain
+  of custody for the cleaning side of training data. Signed per-datum records under
+  one Merkle-batched signature, verifiable offline. A demo runs eight attacks
+  against it, including the two it deliberately does not stop.
 
 ## Research tooling
 
-- **paper-atlas**: *in progress, not yet public.* An overlay map of science,
-  applied to a personal library. It renders the ~250 subfields and ~4,500 topics of
-  [OpenAlex](https://openalex.org) as a honeycomb laid out so citation-neighbours
-  sit together, projects a Zotero library onto it, and surfaces the "frontier"
-  territories: heavily cited by what you've read, but under-read themselves. On the
-  same data it builds a reading desk: fresh arXiv papers at the intersection of an
-  interest profile and the library's own topics, works the library cites most but
-  doesn't own, and recent output from a configurable list of researchers. Runs
-  locally, no account, no API key for the core.
+- **paper-atlas** *(private)*: an overlay map of science built from
+  [OpenAlex](https://openalex.org), with a Zotero library projected onto it to
+  surface the neighbouring fields you have not read. Adds arXiv and citation-based
+  reading feeds. Runs locally.
 
 ## Fellowships & research training
 

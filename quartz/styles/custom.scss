@@ -748,20 +748,24 @@ footer ul li a[href*="medium.com"] {
   align-self: flex-start !important;
 }
 
-// Dark/light mode as a small monochrome pill switch. The default sun/moon
-// icons are hidden; the thumb slides right in dark mode. Track and thumb use
-// theme variables, so the switch re-inks itself when the palette flips.
+// Dark/light mode as a bare icon button: a sun in light mode, a crescent in
+// dark. The plugin's own sun/moon SVGs are replaced with masked shapes so the
+// icon inks itself from the theme variables and matches the footer glyphs.
 button.darkmode {
   position: relative;
-  width: 42px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
   padding: 0;
   margin: 0;
-  border: 1px solid var(--lightgray);
-  border-radius: 11px;
-  background: var(--lightgray);
+  border: 0;
+  background: none;
   cursor: pointer;
-  transition: background 0.25s ease, border-color 0.25s ease;
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+}
+
+button.darkmode:hover {
+  opacity: 1;
 }
 
 button.darkmode svg {
@@ -771,15 +775,24 @@ button.darkmode svg {
 button.darkmode::after {
   content: "";
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--dark);
-  transition: transform 0.25s ease, background 0.25s ease;
+  inset: 0;
+  background-color: var(--darkgray);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 20px 20px;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: 20px 20px;
+  transition: background-color 0.2s ease;
+  // sun: a disc with eight rays
+  @include icon(
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='4.2'/%3E%3Cpath d='M12 2.6v2.6M12 18.8v2.6M2.6 12h2.6M18.8 12h2.6M5.4 5.4l1.9 1.9M16.7 16.7l1.9 1.9M18.6 5.4l-1.9 1.9M7.3 16.7l-1.9 1.9'/%3E%3C/svg%3E"
+  );
 }
 
+// crescent moon once the dark palette is on
 :root[saved-theme="dark"] button.darkmode::after {
-  transform: translateX(20px);
+  @include icon(
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z'/%3E%3C/svg%3E"
+  );
 }
