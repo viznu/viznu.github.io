@@ -333,6 +333,12 @@ blockquote {
   }
 }
 
+// An empty folder shouldn't announce "0 items under this folder." Hide the
+// listing entirely when it has nothing in it and let the page's own text stand.
+.page-listing:has(> div > ul.section-ul:empty) {
+  display: none;
+}
+
 // --- Poems (reader view) ------------------------------------------------------
 // Poem pages are a bare, centred reading view: no sidebar, no footer, no
 // artwork — just the poem, set in a gorgeous serif on the plain page.
