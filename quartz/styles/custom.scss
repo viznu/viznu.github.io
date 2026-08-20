@@ -827,12 +827,15 @@ button.darkmode::after {
 // <html>, which micromorph never touches and a full page load never sets. See
 // quartz/static/mobile-nav.js.
 @media all and (max-width: 800px) {
-  .explorer > .explorer-content {
+  // Gated on js-nav so that if the script never runs these rules do not apply
+  // and the plugin's own behaviour is left intact, rather than leaving a menu
+  // that cannot be opened at all.
+  :root.js-nav .explorer > .explorer-content {
     transform: translateX(-100vw) !important;
     visibility: hidden !important;
   }
 
-  :root.nav-open .explorer > .explorer-content {
+  :root.js-nav.nav-open .explorer > .explorer-content {
     transform: translateX(0) !important;
     visibility: visible !important;
   }
