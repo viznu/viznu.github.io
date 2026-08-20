@@ -74,15 +74,17 @@ agent behaviour. The CLI is open source:
   Independent researcher; interpretability, RLHF, goal misgeneralization,
   eliciting latent knowledge, and scalable oversight.
 - **BlueDot Impact** · 2026:
-  - Frontier AI Governance. Governance, policy, and regulation of frontier AI.
+  - **Frontier AI Governance**. Governance, policy, and regulation of frontier AI.
     [Certificate](https://bluedot.org/certification?id=recTitSUQ0kCDwSiH).
-  - Technical AI Safety. Alignment research methods and threat models; course
-    project was
-    [bluedot-adversarial-dynamics](https://github.com/viznu/bluedot-adversarial-dynamics).
+  - **Technical AI Safety**. Alignment research methods and threat models.
     [Certificate](https://bluedot.org/certification?id=recavPsHJLszbzkAS).
-  - AGI Strategy. Deployment risk, timelines, and strategy.
+  - **Technical AI Safety Project**. Course project:
+    [bluedot-adversarial-dynamics](https://github.com/viznu/bluedot-adversarial-dynamics).
+    <!-- certificate link goes here, same form as the others:
+         [Certificate](https://bluedot.org/certification?id=...) -->
+  - **AGI Strategy**. Deployment risk, timelines, and strategy.
     [Certificate](https://bluedot.org/certification?id=recrXFAnedDvtUUBf).
-  - Biosecurity Fundamentals. Biological risk, biosecurity policy, and pandemic
+  - **Biosecurity Fundamentals**. Biological risk, biosecurity policy, and pandemic
     preparedness.
     [Certificate](https://bluedot.org/certification?id=recKmnrS1fxyUAoLM).
 
