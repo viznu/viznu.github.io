@@ -68,17 +68,23 @@ agent behaviour. The CLI is open source:
   frontier AI safety researchers, across AI infrastructure and hardware security,
   technical AI governance, adversarial and model security, AI control and
   containment, and cybersecurity evaluations. Project: **Insider Honeypots**.
-- **MIT AI Alignment**, AI Safety Fundamentals Fellowship · 2026–present. Independent
-  researcher; interpretability, RLHF, goal misgeneralization, eliciting latent knowledge,
-  and scalable oversight.
-- **BlueDot Impact**, Frontier AI Governance · 2026. Governance, policy, and regulation of
-  frontier AI. [Certificate](https://bluedot.org/certification?id=recTitSUQ0kCDwSiH).
-- **BlueDot Impact**, Technical AI Safety · 2026. Alignment research methods and threat
-  models; course project was
-  [bluedot-adversarial-dynamics](https://github.com/viznu/bluedot-adversarial-dynamics).
-  [Certificate](https://bluedot.org/certification?id=recavPsHJLszbzkAS).
-- **BlueDot Impact**, AGI Strategy · 2026. Deployment risk, timelines, and strategy.
-  [Certificate](https://bluedot.org/certification?id=recrXFAnedDvtUUBf).
+- **Takshashila Institution**, Technology & Policy course · September–December
+  2026. Upcoming.
+- **MIT AI Alignment**, AI Safety Fundamentals Fellowship · summer cohort 2026.
+  Independent researcher; interpretability, RLHF, goal misgeneralization,
+  eliciting latent knowledge, and scalable oversight.
+- **BlueDot Impact** · 2026:
+  - Frontier AI Governance. Governance, policy, and regulation of frontier AI.
+    [Certificate](https://bluedot.org/certification?id=recTitSUQ0kCDwSiH).
+  - Technical AI Safety. Alignment research methods and threat models; course
+    project was
+    [bluedot-adversarial-dynamics](https://github.com/viznu/bluedot-adversarial-dynamics).
+    [Certificate](https://bluedot.org/certification?id=recavPsHJLszbzkAS).
+  - AGI Strategy. Deployment risk, timelines, and strategy.
+    [Certificate](https://bluedot.org/certification?id=recrXFAnedDvtUUBf).
+  - Biosecurity Fundamentals. Biological risk, biosecurity policy, and pandemic
+    preparedness.
+    [Certificate](https://bluedot.org/certification?id=recKmnrS1fxyUAoLM).
 
 ## Academic Projects
 
