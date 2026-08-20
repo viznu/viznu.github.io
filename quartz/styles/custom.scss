@@ -796,3 +796,42 @@ button.darkmode::after {
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z'/%3E%3C/svg%3E"
   );
 }
+
+// --- Desktop sidebar: nav centred on the portrait ----------------------------
+// The portrait is 140px wide and sits flush with the sidebar's left edge, so
+// the nav column is constrained to the same width and its items centred within
+// it. Every entry then shares the portrait's centre line rather than starting
+// at the sidebar's left margin.
+@media all and (min-width: 801px) {
+  .left.sidebar .explorer,
+  .left.sidebar .flex-component {
+    width: 140px;
+  }
+
+  // The wordmark sits in the same column, so centre it too rather than leave
+  // it hanging off the left edge under a centred nav.
+  .page-title a {
+    align-items: center;
+  }
+
+  .left.sidebar .explorer a.nav-file-title {
+    display: block;
+    text-align: center;
+  }
+
+  // Folders render as an icon plus a button; centre the row as a whole.
+  .left.sidebar .explorer .folder-container {
+    justify-content: center;
+  }
+
+  .left.sidebar .explorer .folder-button,
+  .left.sidebar .explorer .folder-title {
+    text-align: center;
+  }
+
+  // Overrides the left-aligned toolbar rule above, now that the theme toggle
+  // is the only thing in it.
+  .left.sidebar .flex-component > div {
+    align-self: center !important;
+  }
+}
