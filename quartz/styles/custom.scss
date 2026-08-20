@@ -339,6 +339,28 @@ blockquote {
   display: none;
 }
 
+// A quiet way back up a level, matching the poem reader's back link.
+.back-link {
+  display: inline-block;
+  margin: 0 0 2rem;
+  font-family: var(--monoFont);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  // Quartz draws the internal-link underline as a background gradient, not a
+  // border, so clearing the colour alone leaves the rule visible.
+  background-color: transparent;
+  background-image: none;
+}
+
+.back-link:hover {
+  color: var(--dark);
+}
+
 // --- Poems (reader view) ------------------------------------------------------
 // Poem pages are a bare, centred reading view: no sidebar, no footer, no
 // artwork — just the poem, set in a gorgeous serif on the plain page.
@@ -795,6 +817,25 @@ button.darkmode::after {
   @include icon(
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z'/%3E%3C/svg%3E"
   );
+}
+
+
+// --- Mobile nav: closed unless <html> says otherwise --------------------------
+// The explorer stylesheet shows the panel by default and hides it only once a
+// `collapsed` class is scripted on, so every freshly rendered page starts with
+// the menu open. Inverted here: the panel is hidden unless `nav-open` is set on
+// <html>, which micromorph never touches and a full page load never sets. See
+// quartz/static/mobile-nav.js.
+@media all and (max-width: 800px) {
+  .explorer > .explorer-content {
+    transform: translateX(-100vw) !important;
+    visibility: hidden !important;
+  }
+
+  :root.nav-open .explorer > .explorer-content {
+    transform: translateX(0) !important;
+    visibility: visible !important;
+  }
 }
 
 // --- Desktop sidebar: nav centred on the portrait ----------------------------

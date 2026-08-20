@@ -2,6 +2,8 @@
 title: Music
 ---
 
+<a class="back-link" href="/off-the-clock/">← off the clock</a>
+
 I've fronted a couple of bands and keep an ongoing home-recording and
 composition practice.
 

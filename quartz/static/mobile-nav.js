@@ -1,26 +1,27 @@
 /*
- * Close the mobile nav after navigating.
+ * Mobile nav open/close state.
  *
- * Three things conspire to leave it open:
+ * The explorer's own markup defaults to OPEN: its stylesheet hides the panel
+ * only when the element carries a `collapsed` class, and that class is added by
+ * script. So every fresh copy of the page - a full load, or the body that the
+ * SPA patches in with micromorph on navigation - arrives with the menu showing,
+ * and stays that way unless script wins the race to re-add the class. The
+ * plugin's own attempt is gated on Element.checkVisibility(), which Safari only
+ * shipped in 17.4, so on older Safari nothing ever re-adds it.
  *
- *  1. The explorer plugin collapses itself on `nav`, but gates that on
- *     Element.checkVisibility(), which Safari only shipped in 17.4. On older
- *     Safari the guard is falsy, so it never collapses - and the menu even
- *     comes up open on first load, leaving the toggle inverted.
- *  2. The SPA swaps the body with micromorph, and the incoming markup carries
- *     no `collapsed` class, so a menu closed before navigating is patched back
- *     open the moment the new page lands.
- *  3. The toggle button starts out `hide-until-loaded` (display:none) until the
- *     plugin marks the tree ready, so its computed display cannot be used to
- *     detect the mobile layout during early startup. The breakpoint media query
- *     is checked instead - it matches $mobile in the Quartz stylesheet.
+ * Rather than keep racing, the default is inverted. Visibility is driven from a
+ * `nav-open` class on <html>, and the panel is hidden unless it is present:
  *
- * Closing once on click is therefore not enough; the close is re-asserted over
- * the following half second so it survives the body swap and any late tree
- * render. It is also deliberately *not* bound to `render`, and skips `nav`
- * events that do not change the path, so a late re-render can never slam shut
- * a menu the user has just opened - which on a slow connection is exactly what
- * a naive version does.
+ *   - <html> is never touched by micromorph, which patches <body> only, so the
+ *     state survives SPA navigation instead of being reset by it;
+ *   - a full page load starts with no class at all, i.e. closed, which is the
+ *     correct default rather than the wrong one;
+ *   - no timing, ordering or feature-detection assumption decides whether the
+ *     menu is visible.
+ *
+ * `collapsed`, `aria-expanded` and `mobile-no-scroll` are kept in step so the
+ * plugin's own toggle stays coherent, re-applied on the next tick because the
+ * plugin's handler runs after this one.
  */
 ;(() => {
   "use strict"
@@ -29,49 +30,66 @@
   window.__mobileNavFix = true
 
   const MOBILE = "(max-width: 800px)" // $mobile in quartz/styles/variables.scss
-  const REASSERT_MS = [0, 60, 160, 360, 620] // covers the swap and a late render
+  const OPEN = "nav-open"
 
-  function collapseAll() {
-    if (!matchMedia(MOBILE).matches) return
+  const html = document.documentElement
+  const isMobile = () => matchMedia(MOBILE).matches
+  const isOpen = () => html.classList.contains(OPEN)
+
+  // Bring the plugin's own state into line with ours.
+  function apply() {
+    if (!isMobile()) return
+    const on = isOpen()
+    html.classList.toggle("mobile-no-scroll", on)
     for (const explorer of document.getElementsByClassName("explorer")) {
-      explorer.classList.add("collapsed")
-      explorer.setAttribute("aria-expanded", "false")
+      explorer.classList.toggle("collapsed", !on)
+      explorer.setAttribute("aria-expanded", on ? "true" : "false")
     }
-    document.documentElement.classList.remove("mobile-no-scroll")
   }
 
-  let timers = []
-  function collapseAndHold() {
-    timers.forEach(clearTimeout)
-    timers = REASSERT_MS.map((ms) => setTimeout(collapseAll, ms))
-    collapseAll()
+  // The plugin reveals the hamburger by dropping `hide-until-loaded` at the end
+  // of its async nav handler. If that handler ever fails, the button stays
+  // display:none and the menu becomes unreachable, so drop it here too.
+  function revealToggle() {
+    for (const btn of document.getElementsByClassName("mobile-explorer")) {
+      btn.classList.remove("hide-until-loaded")
+    }
   }
 
-  // A link inside the menu was activated: close now, and stay closed across the
-  // body swap that follows.
+  function setOpen(on) {
+    html.classList.toggle(OPEN, on)
+    revealToggle()
+    apply()
+    setTimeout(apply, 0) // after the plugin's click handler has had its turn
+  }
+
   document.addEventListener(
     "click",
     (e) => {
       const t = e.target
-      if (t && t.closest && t.closest(".explorer a")) collapseAndHold()
+      if (!t || !t.closest) return
+      if (t.closest(".explorer .mobile-explorer")) {
+        setOpen(!isOpen()) // the hamburger
+      } else if (t.closest(".explorer a")) {
+        setOpen(false) // a destination was chosen
+      }
     },
     true,
   )
 
-  // First load, and any navigation that actually changes the page. Same-path
-  // `nav` events are ignored so they cannot close an open menu.
-  let lastPath = null
-  function onNav() {
-    const path = location.pathname
-    if (path === lastPath) return
-    lastPath = path
-    collapseAndHold()
-  }
+  // Any navigation closes it. `render` is deliberately not listened for: it can
+  // fire while the menu is legitimately open and would slam it shut.
+  document.addEventListener("nav", () => setOpen(false))
+  document.addEventListener("render", revealToggle)
 
-  document.addEventListener("nav", onNav)
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", onNav, { once: true })
-  } else {
-    onNav()
-  }
+  // Leaving the mobile layout hands control back to the desktop sidebar.
+  addEventListener("resize", () => {
+    if (isMobile()) return
+    html.classList.remove(OPEN, "mobile-no-scroll")
+    for (const explorer of document.getElementsByClassName("explorer")) {
+      explorer.classList.remove("collapsed")
+    }
+  })
+
+  setOpen(false)
 })()

@@ -2,6 +2,8 @@
 title: Poetry
 ---
 
+<a class="back-link" href="/off-the-clock/">← off the clock</a>
+
 <nav class="toc-index" aria-label="Poems">
   <a class="toc-row" href="/off-the-clock/poetry/thousand-roads">
     <span class="toc-num">i.</span>

@@ -2,6 +2,8 @@
 title: Articles
 ---
 
+<a class="back-link" href="/off-the-clock/">← off the clock</a>
+
 Occasional writing: notes on AI, safety, and whatever I'm thinking through.
 
 <!--
