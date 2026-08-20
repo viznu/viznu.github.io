@@ -45,4 +45,9 @@ engineering lead at **Hone Capital**. M.S. Security Informatics, **Johns Hopkins
 - **Cloud / infra**: AWS, Kubernetes, Datadog, Celery, memcached, Metabase, Tableau.
 - **Databases**: DynamoDB, Redshift, PostgreSQL, MySQL, Snowflake, Cassandra, MongoDB, Neo4j.
 
+## Contact
+
+- vnair {at} gmail {dot} com
+- vnair8 {at} alumni {dot} jhu {dot} edu
+
 <script src="/static/hero-portrait.js" defer></script>
